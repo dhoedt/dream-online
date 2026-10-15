@@ -327,6 +327,15 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
+.alternative-method summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.alternative-method[open] summary {
+  margin-bottom: 0.5rem;
+}
+
 .final-answer {
   padding-top: 0.5rem;
   border-top: 1px solid var(--border);

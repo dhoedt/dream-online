@@ -1,5 +1,3 @@
-// Calculs et explications partagés par l'exercice et la leçon sur le masque de sous-réseau.
-
 const BIT_WEIGHTS = [128, 64, 32, 16, 8, 4, 2, 1];
 
 const BINARY_OCTET = {
@@ -164,10 +162,19 @@ function createExercise(address, prefix) {
   return { address, prefix, mask, hostBits, network, broadcast, usableHosts: 2 ** hostBits - 2 };
 }
 
-function renderWeightTable(octet) {
-  const cellClass = (weight) => (octet & weight ? ' class="is-set"' : '');
-  const weightCells = BIT_WEIGHTS.map((weight) => `<td${cellClass(weight)}>${weight}</td>`).join('');
-  const bitCells = BIT_WEIGHTS.map((weight) => `<td${cellClass(weight)}>${octet & weight ? 1 : 0}</td>`).join('');
+// revealedBitCount < 8 laisse les bits suivants vides, pour remplir le tableau pas à pas ; le dernier bit révélé peut être mis en gras.
+function renderWeightTable(octet, { revealedBitCount = BIT_WEIGHTS.length, highlightLastBit = false } = {}) {
+  const isRevealed = (index) => index < revealedBitCount;
+  const cellClass = (weight, index) => (isRevealed(index) && octet & weight ? ' class="is-set"' : '');
+  const weightCells = BIT_WEIGHTS.map((weight, index) => `<td${cellClass(weight, index)}>${weight}</td>`).join('');
+  const bitCells = BIT_WEIGHTS.map((weight, index) => {
+    if (!isRevealed(index)) {
+      return '<td>&nbsp;</td>';
+    }
+    const bit = octet & weight ? 1 : 0;
+    const content = highlightLastBit && index === revealedBitCount - 1 ? `<strong>${bit}</strong>` : bit;
+    return `<td${cellClass(weight, index)}>${content}</td>`;
+  }).join('');
   return `
     <div class="binary-scroll">
       <table class="weight-table">
@@ -180,7 +187,6 @@ function renderWeightTable(octet) {
 }
 
 function explainAddressBinaryConversion(address) {
-  // Seul le premier octet est détaillé pas à pas ; il vaut 10, 172 ou 192, donc jamais 0.
   const [firstOctet, ...otherOctets] = intToOctets(address);
   const bits = [];
   let divisionRows = '';
@@ -193,7 +199,6 @@ function explainAddressBinaryConversion(address) {
   const padding = significantBits.length < 8
     ? `<br>Un octet compte toujours 8 bits&nbsp;: on complète à gauche avec ${8 - significantBits.length} zéro(s), ce qui ne change pas la valeur.`
     : '';
-  // Un octet qui compte moins de 8 bits significatifs montre l'étape intermédiaire avant le complément à gauche.
   const needsPadding = (octet) => octet.toString(2).length < 8;
   const otherConversions = otherOctets
     .map((octet) => {
@@ -236,9 +241,40 @@ function explainAddressBinaryConversion(address) {
     <p class="final-answer">Adresse&nbsp;: <strong>${formatDotted(address)}</strong><br>en binaire&nbsp;: <strong>${formatBinaryDotted(address)}</strong>.</p>`;
 }
 
+function explainSubtractionBinaryConversion(octet) {
+  let remainder = octet;
+  const steps = BIT_WEIGHTS.map((weight, index) => {
+    const fits = remainder >= weight;
+    const question = `<strong>${remainder}</strong> ≥ ${weight}&nbsp;?`;
+    const answer = fits
+      ? `<strong>Oui</strong>&nbsp;! Donc on note 1 en dessous de ${weight}. Et on retire ${weight} de ${remainder} → <strong>${remainder - weight}</strong>`
+      : `<strong>Non</strong>&nbsp;! Donc on note 0 en dessous de ${weight}. Le reste ne change pas&nbsp;: <strong>${remainder}</strong>`;
+    if (fits) {
+      remainder -= weight;
+    }
+    return `
+      <p>${question} ${answer}</p>
+      ${renderWeightTable(octet, { revealedBitCount: index + 1, highlightLastBit: true })}`;
+  }).join('');
+  const setWeights = BIT_WEIGHTS.filter((weight) => octet & weight);
+  return `
+    <details class="panel alternative-method">
+    <summary>Méthode alternative&nbsp;: par soustractions, avec le tableau des poids</summary>
+    <p>On reprend le tableau des poids <code>128, 64, 32, 16, 8, 4, 2, 1</code>, utilisé pour passer du binaire au décimal, mais dans l'autre sens.<br>Pour chaque poids, de gauche à droite&nbsp;:</p>
+    <ul>
+      <li>si le reste est <strong>supérieur ou égal</strong> au poids, on note <strong>1</strong> et on soustrait le poids du reste&nbsp;;</li>
+      <li>sinon, on note <strong>0</strong> et le reste ne change pas.</li>
+    </ul>
+    <p>Exemple complet avec <code>${octet}</code>. On recopie le tableau&nbsp;:</p>
+    ${renderWeightTable(octet, { revealedBitCount: 0 })}
+    ${steps}
+    <p>Vérification&nbsp;: <code>${setWeights.join(' + ')} = ${octet}</code>.<br>Cette méthode donne directement les 8 bits, sans complément à gauche.</p>
+    <p><code>${octet}</code> → <code><strong>${octetToBinary(octet)}</strong></code></p>
+    </details>`;
+}
+
 function explainMaskDecimalConversion(mask) {
   const octets = intToOctets(mask);
-  // Seul l'octet « coupé » par le préfixe demande un calcul ; avec /24 il n'y en a pas, on détaille alors 255.
   const partialOctet = octets.find((octet) => octet !== 0 && octet !== 255);
   const detailedOctet = partialOctet ?? 255;
   const setWeights = BIT_WEIGHTS.filter((weight) => detailedOctet & weight);

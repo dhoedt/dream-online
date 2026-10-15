@@ -48,8 +48,16 @@
 
 <script src="../js/subnet.js"></script>
 <script>
-  // Le préfixe /22 coupe le troisième octet : l'exemple montre que l'octet « coupé » n'est pas toujours le dernier.
   const WORKED_EXAMPLE = { octets: [172, 16, 45, 130], prefix: 22 };
+
+  const ALTERNATIVE_METHODS = {
+    0: (example) => explainSubtractionBinaryConversion(intToOctets(example.address)[0]),
+  };
+
+  function renderAlternativeMethod(questionIndex, example) {
+    const alternativeMethod = ALTERNATIVE_METHODS[questionIndex];
+    return alternativeMethod ? alternativeMethod(example) : '';
+  }
 
   function renderWorkedExample() {
     const example = createExercise(octetsToInt(WORKED_EXAMPLE.octets), WORKED_EXAMPLE.prefix);
@@ -59,6 +67,7 @@
       <section class="worked-step">
         <h3><span class="question-number">${questionIndex + 1}</span><span>${question.title}</span></h3>
         <div class="panel">${question.explain(example)}</div>
+        ${renderAlternativeMethod(questionIndex, example)}
       </section>`).join('');
   }
 
