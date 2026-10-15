@@ -59,7 +59,6 @@
   function generateExercise() {
     const prefix = randomInt(MIN_PREFIX, MAX_PREFIX);
     let generated;
-    // L'énoncé doit rester une adresse d'hôte : on écarte l'adresse réseau et l'adresse de diffusion.
     do {
       generated = createExercise(randomPrivateAddress(), prefix);
     } while (generated.address === generated.network || generated.address === generated.broadcast);
@@ -174,7 +173,6 @@
       });
     });
 
-    // Une saisie mal formée n'est pas une erreur de raisonnement : on ne révèle ni les champs faux ni l'aide.
     if (malformedFields.length > 0) {
       malformedFields.forEach((input) => setFieldWrong(input, true));
       setFeedback(section, `Saisie incomplète ou mal formée : ${[...formatHelps].join(' ; ')}.`, 'is-wrong');
