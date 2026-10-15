@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exercice : les couches du modèle OSI</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<main>
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 9.5V20a1 1 0 0 0 1 1h3.5v-6h5v6H18a1 1 0 0 0 1-1V9.5"/>
+    </svg>
+    Accueil
+  </a>
+  <h1>Exercice&nbsp;: les couches du modèle OSI</h1>
+  <p class="intro">Retrouvez le nom de chacune des sept couches, de la couche 7 (en haut) à la couche 1 (en bas).</p>
+
+  <section class="question" id="osi-exercise">
+    <form novalidate>
+      <ol class="layer-list" id="layers"></ol>
+      <div class="actions">
+        <button type="submit" class="primary">Vérifier</button>
+        <button type="button" id="restart">Recommencer</button>
+        <p class="feedback" role="status"></p>
+      </div>
+    </form>
+    <div class="help">
+      <div class="help-buttons">
+        <button type="button" data-panel="hint" aria-expanded="false">Afficher l'indice</button>
+      </div>
+      <div class="panel" data-panel-content="hint" hidden>
+        <h3>Indice</h3>
+        <p><strong>P</strong>our <strong>L</strong>e <strong>R</strong>éseau <strong>T</strong>out <strong>S</strong>e <strong>P</strong>asse <strong>A</strong>utomatiquement</p>
+        <p>Les initiales suivent l'ordre des couches, de la couche 1 à la couche 7.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="../js/common.js"></script>
+<script>
+  const LAYERS = [
+    {
+      number: 7,
+      acceptedNames: ['Application'],
+      description: 'Services utilisés directement par les programmes : web, e-mail, DNS.',
+      icons: [
+        { caption: 'navigateur web', shapes: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M6.5 6.5h.01M9.5 6.5h.01"/>' },
+        { caption: 'e-mail', shapes: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>' },
+      ],
+    },
+    {
+      number: 6,
+      acceptedNames: ['Présentation'],
+      description: 'Mise en forme, chiffrement et compression des données.',
+      icons: [
+        { caption: 'chiffrement', shapes: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>' },
+        { caption: 'format de fichier', shapes: '<path d="M14 3H7a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 17h6"/>' },
+      ],
+    },
+    {
+      number: 5,
+      acceptedNames: ['Session'],
+      description: 'Ouvre, maintient et ferme le dialogue entre deux machines.',
+      icons: [
+        { caption: 'dialogue', shapes: '<path d="M4 4h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M19 9h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1v3l-4-3h-4"/>' },
+        { caption: 'connexion ouverte', shapes: '<path d="m17 4 3 3-3 3"/><path d="M4 7h16"/><path d="m7 14-3 3 3 3"/><path d="M20 17H4"/>' },
+      ],
+    },
+    {
+      number: 4,
+      acceptedNames: ['Transport'],
+      description: 'Livraison de bout en bout entre programmes, grâce aux ports (TCP, UDP).',
+      icons: [
+        { caption: 'pare-feu', shapes: '<rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9.33h18M3 14.67h18M12 4v5.33M8 9.33v5.34M16 9.33v5.34M12 14.67V20"/>' },
+        { caption: 'segments', shapes: '<rect x="2" y="8" width="5.5" height="8" rx="1"/><rect x="9.25" y="8" width="5.5" height="8" rx="1"/><rect x="16.5" y="8" width="5.5" height="8" rx="1"/>' },
+      ],
+    },
+    {
+      number: 3,
+      acceptedNames: ['Réseau'],
+      description: 'Adressage logique (IP) et choix du chemin des paquets.',
+      icons: [
+        { caption: 'routeur', shapes: '<circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/><path d="m10 9 2-2 2 2M10 15l2 2 2-2M9 10l-2 2 2 2M15 10l2 2-2 2"/>' },
+        { caption: 'routage', shapes: '<circle cx="5" cy="18" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M6 16.3 11 7.7M13 7.7l5 8.6"/>' },
+      ],
+    },
+    {
+      number: 2,
+      acceptedNames: ['Liaison de données'],
+      description: 'Trames échangées entre machines voisines grâce aux adresses MAC.',
+      icons: [
+        { caption: 'commutateur (switch)', shapes: '<rect x="2" y="8" width="20" height="8" rx="2"/><path d="M6 12h.01M10 12h.01M14 12h.01M18 12h.01"/>' },
+        { caption: 'point d\'accès Wi-Fi', shapes: '<path d="M5 10a10 10 0 0 1 14 0"/><path d="M8 13a6 6 0 0 1 8 0"/><path d="M12 17h.01"/><path d="M8 21h8"/>' },
+      ],
+    },
+    {
+      number: 1,
+      acceptedNames: ['Physique'],
+      description: 'Transmission des bits sous forme de signaux électriques, lumineux ou radio.',
+      icons: [
+        { caption: 'câble RJ45', shapes: '<path d="M7 3h10v10l-2 3H9l-2-3z"/><path d="M10 3v4M12 3v4M14 3v4"/><path d="M12 16v5"/>' },
+        { caption: 'concentrateur (hub)', shapes: '<rect x="3" y="9" width="18" height="6" rx="1"/><path d="M7 9V5M12 9V5M17 9V5M12 15v4"/>' },
+      ],
+    },
+  ];
+
+  const section = document.getElementById('osi-exercise');
+  const form = section.querySelector('form');
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  function normalizeAnswer(text) {
+    return text.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
+  }
+
+  function renderIcon(icon) {
+    return `
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon.shapes}</svg>
+        <span>${icon.caption}</span>
+      </li>`;
+  }
+
+  function renderLayer(layer) {
+    return `
+      <li class="layer">
+        <span class="question-number">${layer.number}</span>
+        <div>
+          <input type="text" class="layer-name" autocomplete="off" autocapitalize="off" spellcheck="false"
+            aria-label="Nom de la couche ${layer.number}">
+          <p class="layer-description">${layer.description}</p>
+        </div>
+        <ul class="layer-icons">${layer.icons.map(renderIcon).join('')}</ul>
+      </li>`;
+  }
+
+  function checkLayers() {
+    const wrongFields = [];
+    section.querySelectorAll('input.layer-name').forEach((input, layerIndex) => {
+      if (input.readOnly) {
+        return;
+      }
+      const acceptedNames = LAYERS[layerIndex].acceptedNames;
+      const isCorrect = acceptedNames.map(normalizeAnswer).includes(normalizeAnswer(input.value));
+      setFieldWrong(input, !isCorrect);
+      if (isCorrect) {
+        input.value = acceptedNames[0];
+        input.readOnly = true;
+      } else {
+        wrongFields.push(input);
+      }
+    });
+
+    if (wrongFields.length > 0) {
+      const wrongCountText = wrongFields.length === 1 ? '1 couche' : `${wrongFields.length} couches`;
+      setFeedback(section, `✗ ${wrongCountText} à corriger. Réessayez, ou consultez l'indice ci-dessous.`, 'is-wrong');
+      wrongFields[0].focus();
+      return;
+    }
+
+    setFeedback(section, '✓ Correct !', 'is-correct');
+    section.classList.add('is-correct');
+    submitButton.disabled = true;
+  }
+
+  function startExercise() {
+    document.getElementById('layers').innerHTML = LAYERS.map(renderLayer).join('');
+    setFeedback(section, '', '');
+    section.classList.remove('is-correct');
+    submitButton.disabled = false;
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    checkLayers();
+  });
+  form.addEventListener('input', (event) => setFieldWrong(event.target, false));
+  document.getElementById('restart').addEventListener('click', startExercise);
+
+  for (const toggleButton of section.querySelectorAll('[data-panel]')) {
+    toggleButton.addEventListener('click', () => togglePanel(section, toggleButton));
+  }
+
+  startExercise();
+</script>
+</body>
+</html>

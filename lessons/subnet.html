@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leçon : le masque de sous-réseau</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<main>
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 9.5V20a1 1 0 0 0 1 1h3.5v-6h5v6H18a1 1 0 0 0 1-1V9.5"/>
+    </svg>
+    Accueil
+  </a>
+  <h1>Leçon&nbsp;: le masque de sous-réseau</h1>
+
+  <section class="lesson-card">
+    <h2>Bit, octet et adresse IPv4</h2>
+    <div class="panel">
+      <p>Un <strong>bit</strong> (de l'anglais <em>binary digit</em>, «&nbsp;chiffre binaire&nbsp;») est la plus petite unité d'information en informatique&nbsp;: il ne peut valoir que <strong>0</strong> ou <strong>1</strong>.</p>
+      <p>Un <strong>octet</strong> est un groupe de <strong>8 bits</strong>. Sa plus petite valeur s'obtient quand tous ses bits valent 0, sa plus grande quand tous ses bits valent 1&nbsp;:</p>
+      <div class="binary-scroll">
+        <table class="weight-table">
+          <thead><tr><td></td><th scope="col">Minimum</th><th scope="col">Maximum</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Binaire</th><td>00000000</td><td class="is-set">11111111</td></tr>
+            <tr><th scope="row">Décimal</th><td>0</td><td class="is-set">255</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Un octet peut donc prendre 256 valeurs différentes, de 0 à 255.</p>      <p>Une adresse IPv4 est composée de <strong>32 bits</strong>, regroupés en <strong>4 octets</strong>. Pour la rendre plus lisible, on l'écrit d'habitude en notation décimale pointée&nbsp;: chaque octet est converti en un nombre décimal entre 0 et 255, et les octets sont séparés par des points, par exemple <code id="dotted-example"></code>.</p>
+    </div>
+  </section>
+
+  <section class="lesson-card">
+    <h2>Exemple d'un exercice résolu pas à pas&nbsp;: <code id="worked-example-address"></code></h2>
+    <div id="worked-example-steps"></div>
+  </section>
+
+  <a class="exercise-link lesson-link" href="../exercises/subnet.html">
+    <span class="exercise-title">Exercice&nbsp;: le masque de sous-réseau</span>
+    <span class="exercise-description">Appliquez la même méthode à une adresse tirée au hasard.</span>
+  </a>
+</main>
+
+<script src="../js/subnet.js"></script>
+<script>
+  // Le préfixe /22 coupe le troisième octet : l'exemple montre que l'octet « coupé » n'est pas toujours le dernier.
+  const WORKED_EXAMPLE = { octets: [172, 16, 45, 130], prefix: 22 };
+
+  function renderWorkedExample() {
+    const example = createExercise(octetsToInt(WORKED_EXAMPLE.octets), WORKED_EXAMPLE.prefix);
+    document.getElementById('dotted-example').textContent = formatDotted(example.address);
+    document.getElementById('worked-example-address').textContent = `${formatDotted(example.address)}/${example.prefix}`;
+    document.getElementById('worked-example-steps').innerHTML = QUESTIONS.map((question, questionIndex) => `
+      <section class="worked-step">
+        <h3><span class="question-number">${questionIndex + 1}</span><span>${question.title}</span></h3>
+        <div class="panel">${question.explain(example)}</div>
+      </section>`).join('');
+  }
+
+  renderWorkedExample();
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exercice : le masque de sous-réseau</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<main>
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 9.5V20a1 1 0 0 0 1 1h3.5v-6h5v6H18a1 1 0 0 0 1-1V9.5"/>
+    </svg>
+    Accueil
+  </a>
+
+  <a class="exercise-link lesson-link" href="../lessons/subnet.html">
+    <span class="exercise-title">Leçon&nbsp;: le masque de sous-réseau</span>
+    <span class="exercise-description">Bit, octet, adresse IPv4 et un exemple d'exercice résolu pas à pas.</span>
+  </a>
+
+  <h1>Exercice&nbsp;: le masque de sous-réseau</h1>
+  <div class="statement">
+    <div>
+      <p class="statement-label">Adresse IPv4 d'une machine et son masque de sous-réseau (subnet mask)</p>
+      <p class="statement-address" id="statement-address"></p>
+    </div>
+    <button type="button" id="new-exercise">Nouvel exercice</button>
+  </div>
+
+  <div id="questions"></div>
+</main>
+
+<script src="../js/common.js"></script>
+<script src="../js/subnet.js"></script>
+<script>
+  const MIN_PREFIX = 20;
+  const MAX_PREFIX = 27;
+
+  const PRIVATE_RANGES = [
+    { base: octetsToInt([10, 0, 0, 0]), prefix: 8 },
+    { base: octetsToInt([172, 16, 0, 0]), prefix: 12 },
+    { base: octetsToInt([192, 168, 0, 0]), prefix: 16 },
+  ];
+
+  let exercise = null;
+
+  function randomInt(min, max) {
+    return min + Math.floor(Math.random() * (max - min + 1));
+  }
+
+  function randomPrivateAddress() {
+    const range = PRIVATE_RANGES[randomInt(0, PRIVATE_RANGES.length - 1)];
+    return range.base + randomInt(0, 2 ** (32 - range.prefix) - 1);
+  }
+
+  function generateExercise() {
+    const prefix = randomInt(MIN_PREFIX, MAX_PREFIX);
+    let generated;
+    // L'énoncé doit rester une adresse d'hôte : on écarte l'adresse réseau et l'adresse de diffusion.
+    do {
+      generated = createExercise(randomPrivateAddress(), prefix);
+    } while (generated.address === generated.network || generated.address === generated.broadcast);
+    return generated;
+  }
+
+  function renderGroup(group, groupIndex, groupId) {
+    const fields = Array.from({ length: group.fieldCount }, (_, fieldIndex) => {
+      const fieldLabel = group.fieldCount > 1
+        ? `${group.label}, octet ${fieldIndex + 1} sur ${group.fieldCount}`
+        : group.label;
+      return `<input type="text" class="${group.format.cssClass}" data-group="${groupIndex}"
+        inputmode="numeric" autocomplete="off" spellcheck="false"
+        maxlength="${group.format.maxLength}" aria-label="${fieldLabel}">`;
+    }).join('<span class="dot" aria-hidden="true">.</span>');
+    return `
+      <div class="field-group" role="group" aria-labelledby="${groupId}">
+        <span class="group-label" id="${groupId}">${group.label}</span>
+        <div class="fields">${fields}</div>
+      </div>`;
+  }
+
+  function renderQuestion(question, questionIndex) {
+    const section = document.createElement('section');
+    section.className = 'question';
+    section.innerHTML = `
+      <h2><span class="question-number">${questionIndex + 1}</span><span>${question.title}</span></h2>
+      <form novalidate>
+        ${question.groups.map((group, groupIndex) => renderGroup(group, groupIndex, `group-${questionIndex}-${groupIndex}`)).join('')}
+        <div class="actions">
+          <button type="submit" class="primary">Vérifier</button>
+          <p class="feedback" role="status"></p>
+        </div>
+      </form>
+      <div class="help" hidden>
+        <div class="help-buttons">
+          <button type="button" data-panel="hint" aria-expanded="false">${PANEL_LABELS.hint.show}</button>
+          <button type="button" data-panel="answer" aria-expanded="false">${PANEL_LABELS.answer.show}</button>
+        </div>
+        <div class="panel" data-panel-content="hint" hidden><h3>Indice</h3>${question.hint}</div>
+        <div class="panel" data-panel-content="answer" hidden><h3>Réponse</h3>${question.explain(exercise)}</div>
+      </div>`;
+
+    const form = section.querySelector('form');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      checkQuestion(question, section);
+    });
+    form.addEventListener('input', (event) => {
+      setFieldWrong(event.target, false);
+      if (event.target.value.length === event.target.maxLength) {
+        focusSiblingField(event.target, 1);
+      }
+    });
+    form.addEventListener('keydown', handleFieldNavigation);
+
+    for (const toggleButton of section.querySelectorAll('[data-panel]')) {
+      toggleButton.addEventListener('click', () => togglePanel(section, toggleButton));
+    }
+    return section;
+  }
+
+  function focusSiblingField(input, direction) {
+    const groupFields = [...input.closest('.fields').querySelectorAll('input')];
+    const sibling = groupFields[groupFields.indexOf(input) + direction];
+    if (sibling) {
+      sibling.focus();
+      sibling.select();
+    }
+    return Boolean(sibling);
+  }
+
+  function handleFieldNavigation(event) {
+    if (!(event.target instanceof HTMLInputElement)) {
+      return;
+    }
+    if (event.key === '.' || event.key === ',') {
+      event.preventDefault();
+      focusSiblingField(event.target, 1);
+    } else if (event.key === 'Backspace' && event.target.value === '') {
+      if (focusSiblingField(event.target, -1)) {
+        event.preventDefault();
+      }
+    }
+  }
+
+  function parseField(text, format) {
+    if (!format.pattern.test(text)) {
+      return null;
+    }
+    const value = parseInt(text, format.radix);
+    return value <= format.maxValue ? value : null;
+  }
+
+  function checkQuestion(question, section) {
+    const malformedFields = [];
+    const mismatchedFields = [];
+    const formatHelps = new Set();
+
+    question.groups.forEach((group, groupIndex) => {
+      const expectedValues = group.expected(exercise);
+      const inputs = section.querySelectorAll(`input[data-group="${groupIndex}"]`);
+      inputs.forEach((input, fieldIndex) => {
+        setFieldWrong(input, false);
+        const value = parseField(input.value, group.format);
+        if (value === null) {
+          malformedFields.push(input);
+          formatHelps.add(group.format.formatHelp);
+        } else if (value !== expectedValues[fieldIndex]) {
+          mismatchedFields.push(input);
+        }
+      });
+    });
+
+    // Une saisie mal formée n'est pas une erreur de raisonnement : on ne révèle ni les champs faux ni l'aide.
+    if (malformedFields.length > 0) {
+      malformedFields.forEach((input) => setFieldWrong(input, true));
+      setFeedback(section, `Saisie incomplète ou mal formée : ${[...formatHelps].join(' ; ')}.`, 'is-wrong');
+      malformedFields[0].focus();
+      return;
+    }
+
+    if (mismatchedFields.length > 0) {
+      mismatchedFields.forEach((input) => setFieldWrong(input, true));
+      setFeedback(section, '✗ Incorrect. Corrigez les champs signalés et réessayez, ou consultez l\'aide ci-dessous.', 'is-wrong');
+      section.querySelector('.help').hidden = false;
+      return;
+    }
+
+    setFeedback(section, '✓ Correct !', 'is-correct');
+    section.classList.add('is-correct');
+    section.querySelector('button[type="submit"]').disabled = true;
+    for (const input of section.querySelectorAll('input')) {
+      input.readOnly = true;
+    }
+  }
+
+  function startExercise() {
+    exercise = generateExercise();
+    document.getElementById('statement-address').textContent = `${formatDotted(exercise.address)}/${exercise.prefix}`;
+    document.getElementById('questions').replaceChildren(...QUESTIONS.map(renderQuestion));
+    window.scrollTo(0, 0);
+  }
+
+  document.getElementById('new-exercise').addEventListener('click', startExercise);
+  startExercise();
+</script>
+</body>
+</html>
