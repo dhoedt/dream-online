@@ -153,6 +153,45 @@ h1 {
   margin-bottom: 1rem;
 }
 
+.exercise-link.lesson-reminder {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  box-shadow: 0 0.25rem 0.9rem color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.exercise-link.lesson-reminder:hover {
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+}
+
+.lesson-reminder .exercise-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lesson-reminder svg {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.reminder-label {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.reminder-text {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
 .worked-step + .worked-step {
   margin-top: 1.25rem;
   padding-top: 1.25rem;
