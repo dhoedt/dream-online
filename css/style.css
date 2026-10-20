@@ -130,6 +130,39 @@ h1 {
   letter-spacing: 0.02em;
 }
 
+#custom-form {
+  margin-top: 0.4rem;
+}
+
+.custom-help {
+  margin: 0.4rem 0 0;
+}
+
+.statement .feedback:not(:empty) {
+  margin-top: 0.4rem;
+}
+
+.statement-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0.5rem;
+}
+
+.icon-button svg {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
 .lesson-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -265,7 +298,8 @@ input {
 
 input.binary { width: calc(8ch + 1.2rem); }
 input.decimal { width: calc(3ch + 1.4rem); }
-input.count { width: calc(6ch + 1.4rem); }
+input.count { width: calc(8ch + 1.4rem); }
+input.prefix { width: calc(2ch + 1.4rem); }
 
 input:focus-visible,
 button:focus-visible {

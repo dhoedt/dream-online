@@ -20,7 +20,7 @@ const DECIMAL_OCTET = {
 
 const HOST_COUNT = {
   cssClass: 'count',
-  maxLength: 6,
+  maxLength: 8,
   pattern: /^(0|[1-9]\d*)$/,
   radix: 10,
   maxValue: Infinity,
