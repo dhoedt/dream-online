@@ -9,33 +9,82 @@
 <body>
 <main>
   <h1>Cours d'informatique - DYL</h1>
-  
-  <h2>Ressources</h2>
-  <a href="https://flashcards.dhoedt.com/profile/aa4c0967-8cab-4beb-aa81-0ec0cb699f19">flashcards</a>
 
-  <h2>Leçons</h2>
-  <ul class="exercise-list">
-    <li>
-      <a class="exercise-link" href="lessons/subnet.html">
-        <span class="exercise-title">Le masque de sous-réseau</span>      </a>
-    </li>
-  </ul>
+  <div class="tabs" role="tablist" aria-label="Sections du site">
+    <button type="button" role="tab" id="tab-exercises" aria-controls="exercises">Exercices</button>
+    <button type="button" role="tab" id="tab-lessons" aria-controls="lessons">Leçons</button>
+    <button type="button" role="tab" id="tab-resources" aria-controls="resources">Ressources</button>
+  </div>
 
-  <h2>Exercices</h2>
-  <ul class="exercise-list">
-    <li>
-      <a class="exercise-link" href="exercises/subnet.html">
-        <span class="exercise-title">Le masque de sous-réseau</span>      </a>
-    </li>
-    <li>
-      <a class="exercise-link" href="exercises/osi.html">
-        <span class="exercise-title">Les couches du modèle OSI</span>      </a>
-    </li>
-    <li>
-      <a class="exercise-link" href="exercises/recovery.html">
-        <span class="exercise-title">Les options de récupération de Windows 11</span>      </a>
-    </li>
-  </ul>
+  <section class="tab-panel" role="tabpanel" id="resources" aria-labelledby="tab-resources">
+    <a href="https://flashcards.dhoedt.com/profile/aa4c0967-8cab-4beb-aa81-0ec0cb699f19">flashcards</a>
+  </section>
+
+  <section class="tab-panel" role="tabpanel" id="lessons" aria-labelledby="tab-lessons">
+    <ul class="exercise-list">
+      <li>
+        <a class="exercise-link" href="lessons/subnet.html">
+          <span class="exercise-title">Le masque de sous-réseau</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="tab-panel" role="tabpanel" id="exercises" aria-labelledby="tab-exercises">
+    <ul class="exercise-list">
+      <li>
+        <a class="exercise-link" href="exercises/subnet.html">
+          <span class="exercise-title">Le masque de sous-réseau</span>
+        </a>
+      </li>
+      <li>
+        <a class="exercise-link" href="exercises/osi.html">
+          <span class="exercise-title">Les couches du modèle OSI</span>
+        </a>
+      </li>
+      <li>
+        <a class="exercise-link" href="exercises/recovery.html">
+          <span class="exercise-title">Les options de récupération de Windows 11</span>
+        </a>
+      </li>
+    </ul>
+  </section>
 </main>
+
+<script>
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+
+  // L'onglet actif est gardé dans l'URL (#lessons, #exercises…) pour survivre au retour arrière.
+  function selectTab(panelId) {
+    for (const tab of tabs) {
+      const isSelected = tab.getAttribute('aria-controls') === panelId;
+      tab.setAttribute('aria-selected', String(isSelected));
+      tab.tabIndex = isSelected ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !isSelected;
+    }
+    history.replaceState(null, '', `#${panelId}`);
+  }
+
+  function panelIdFromHash() {
+    const hashId = location.hash.slice(1);
+    const hasTab = tabs.some((tab) => tab.getAttribute('aria-controls') === hashId);
+    return hasTab ? hashId : tabs[0].getAttribute('aria-controls');
+  }
+
+  for (const tab of tabs) {
+    tab.addEventListener('click', () => selectTab(tab.getAttribute('aria-controls')));
+    tab.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) {
+        return;
+      }
+      const nextTab = tabs[(tabs.indexOf(tab) + step + tabs.length) % tabs.length];
+      selectTab(nextTab.getAttribute('aria-controls'));
+      nextTab.focus();
+    });
+  }
+
+  selectTab(panelIdFromHash());
+</script>
 </body>
 </html>

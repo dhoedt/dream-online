@@ -568,6 +568,33 @@ input[type="radio"] {
   margin: 0.75rem 0 1rem;
 }
 
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 1rem 0 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabs [role="tab"] {
+  margin-bottom: -1px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.tabs [role="tab"]:hover {
+  color: var(--text);
+}
+
+.tabs [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+
 @media (max-width: 34rem) {
   .layer {
     grid-template-columns: auto minmax(0, 1fr);
