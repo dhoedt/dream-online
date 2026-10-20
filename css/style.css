@@ -516,6 +516,65 @@ input.layer-name {
   color: var(--accent);
 }
 
+.exam-table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+.exam-table th,
+.exam-table td {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--muted);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.exam-table th {
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+}
+
+.exam-table .narrow-column {
+  width: 1%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.exam-table .option-number {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.exam-table tbody th {
+  color: inherit;
+  font-weight: 400;
+  text-align: left;
+}
+
+.exam-table tr.is-wrong > * { background: var(--danger-soft); }
+.exam-table tr.is-correct > * { background: var(--success-soft); }
+
+input.option-choice { width: calc(1ch + 1.4rem); }
+
+input[type="radio"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.version-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0 1rem;
+}
+
 @media (max-width: 34rem) {
   .layer {
     grid-template-columns: auto minmax(0, 1fr);
