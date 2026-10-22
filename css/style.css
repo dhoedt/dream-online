@@ -483,6 +483,62 @@ button:disabled {
   color: var(--muted);
 }
 
+/* Diagrammes SVG des leçons : défilement horizontal sur petit écran pour garder le texte lisible. */
+.diagram-scroll {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.diagram {
+  display: block;
+  width: 100%;
+  min-width: 26rem;
+  height: auto;
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.diagram .node {
+  fill: var(--surface);
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.diagram .icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.diagram text {
+  fill: currentColor;
+  text-anchor: middle;
+}
+
+.diagram-label {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.diagram-note {
+  font-size: 12px;
+}
+
+.diagram .arrow {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.diagram .arrow-plain { stroke: var(--text); }
+.diagram .arrow-iso { stroke: var(--host-bits); }
+.diagram .arrow-usb { stroke: var(--accent); }
+
+.diagram .arrowhead-plain { fill: var(--text); }
+.diagram .arrowhead-iso { fill: var(--host-bits); }
+.diagram .arrowhead-usb { fill: var(--accent); }
+
 [hidden] { display: none !important; }
 
 .exercise-list {

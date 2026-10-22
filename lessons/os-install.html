@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leçon : installer un système d'exploitation</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<main>
+  <a class="back-link" href="../index.html#lessons">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 9.5V20a1 1 0 0 0 1 1h3.5v-6h5v6H18a1 1 0 0 0 1-1V9.5"/>
+    </svg>
+    Accueil
+  </a>
+  <h1>Leçon&nbsp;: installer un système d'exploitation</h1>
+
+  <section class="lesson-card">
+    <h2>Le support bootable</h2>
+    <div class="panel">
+      <p>L'installation d'un <strong>système d'exploitation</strong> (<strong>OS</strong>, de l'anglais <em>Operating System</em>) se faisait, à l'époque, à l'aide d'un DVD qu'on achetait dans le commerce.</p>
+      <p>Ce DVD n'est pas comme les autres&nbsp;: il contient les informations nécessaires à l'ordinateur pour démarrer dessus. On appelle ce genre de DVD un <strong>DVD bootable</strong> («&nbsp;démarrable&nbsp;»)&nbsp;: c'est un DVD que le <strong>firmware</strong> (BIOS, UEFI) peut démarrer comme s'il démarrait un OS.</p>
+      <p>Au démarrage via le DVD, un <strong>installateur</strong> permettait alors à l'utilisateur d'installer l'OS selon ses goûts&nbsp;:</p>
+      <ul>
+        <li>nom d'utilisateur&nbsp;;</li>
+        <li>nom du PC&nbsp;;</li>
+        <li>mot de passe&nbsp;;</li>
+        <li>comptes supplémentaires, etc.</li>
+      </ul>
+      <p>Aujourd'hui, les lecteurs DVD se font rares&nbsp;: il faut donc utiliser un autre type de stockage, la <strong>clé USB</strong>.</p>
+      <p>Cette clé USB contient <strong>les mêmes fichiers</strong> que le DVD d'installation, ce qui permet à l'ordinateur de démarrer dessus de la même manière.</p>
+      <p>Ces fichiers sont fournis sous la forme d'un <strong>fichier ISO</strong> (extension <code>.iso</code>)&nbsp;: un fichier qui contient une copie exacte du contenu d'un disque optique (p.&nbsp;ex. CD, DVD ou Blu-ray)&nbsp;; on l'appelle aussi une <strong>image disque</strong>.</p>
+      <p>La création d'une <strong>clé USB bootable</strong> à partir d'une simple clé USB du commerce est décrite ci-dessous.</p>
+    </div>
+  </section>
+
+  <section class="lesson-card">
+    <h2>Media Creation Tool</h2>
+    <div class="panel">
+      <p>Le <strong>Media Creation Tool</strong> est l'outil <strong>officiel de Microsoft</strong>, à télécharger sur <code>microsoft.com</code>. Il sert <strong>uniquement à installer Windows</strong>.</p>
+      <p>Au lancement, l'outil demande quel support utiliser&nbsp;:</p>
+      <ul>
+        <li><strong>Clé USB</strong> (<em>USB flash drive</em>)&nbsp;: l'outil crée directement une clé USB bootable. La clé doit faire <strong>au moins 8&nbsp;Go</strong>.</li>
+        <li><strong>Fichier ISO</strong> (<em>ISO file</em>)&nbsp;: l'outil télécharge l'image disque de Windows, qu'il faudra ensuite graver sur un DVD (ou mettre sur une clé USB avec un autre outil, comme Rufus).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="lesson-card">
+    <h2>Rufus</h2>
+    <div class="panel">
+      <p><strong>Rufus</strong> est un logiciel <strong>libre</strong> et open source, sans aucun lien avec Microsoft. C'est un utilitaire qui permet de créer des <strong>clés USB démarrables</strong> à partir d'une <strong>image ISO</strong> démarrable (p.&nbsp;ex. Windows, Linux, etc.).</p>
+      <p>Rufus a besoin d'un <strong>fichier ISO</strong>&nbsp;: il faut d'abord le télécharger sur le site officiel de l'OS (p.&nbsp;ex. <code>microsoft.com</code> pour Windows), puis le choisir dans Rufus avec le bouton <em>Sélection</em>.</p>
+      <p>Rufus crée uniquement des <strong>clés USB</strong>&nbsp;: il ne grave pas de DVD.</p>
+    </div>
+  </section>
+
+  <section class="lesson-card">
+    <h2>Récapitulatif&nbsp;: obtenir un support bootable</h2>
+    <div class="diagram-scroll">
+      <svg class="diagram" viewBox="0 0 500 362" role="img" aria-labelledby="boot-media-title">
+        <title id="boot-media-title">Depuis microsoft.com, on obtient un fichier ISO ou le Media Creation Tool. Le Media Creation Tool produit un fichier ISO ou une clé USB bootable. Rufus, avec un fichier ISO, produit une clé USB bootable.</title>
+        <defs>
+          <marker id="boot-media-arrow-plain" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path class="arrowhead-plain" d="M0 0 10 5 0 10z"/></marker>
+          <marker id="boot-media-arrow-iso" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path class="arrowhead-iso" d="M0 0 10 5 0 10z"/></marker>
+          <marker id="boot-media-arrow-usb" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path class="arrowhead-usb" d="M0 0 10 5 0 10z"/></marker>
+        </defs>
+
+        <path class="arrow arrow-plain" d="M177 65V108" marker-end="url(#boot-media-arrow-plain)"/>
+        <path class="arrow arrow-iso" d="M97 33C10 90 20 255 150 295" marker-end="url(#boot-media-arrow-iso)"/>
+        <path class="arrow arrow-iso" d="M177 175V263" marker-end="url(#boot-media-arrow-iso)"/>
+        <path class="arrow arrow-usb" d="M245 175C300 205 330 220 330 257" marker-end="url(#boot-media-arrow-usb)"/>
+        <path class="arrow arrow-usb" d="M355 175C355 210 345 220 344 257" marker-end="url(#boot-media-arrow-usb)"/>
+
+        <rect class="node" x="97" y="10" width="160" height="55" rx="4"/>
+        <path class="icon" d="M117 26v14M111 34l6 6 6-6M108 44v4h18v-4"/>
+        <text class="diagram-label" x="192" y="43">microsoft.com</text>
+
+        <rect class="node" x="87" y="120" width="180" height="55" rx="4"/>
+        <text class="diagram-label" x="177" y="153">Media Creation Tool</text>
+
+        <rect class="node" x="310" y="120" width="90" height="55" rx="4"/>
+        <text class="diagram-label" x="355" y="153">Rufus</text>
+
+        <text class="diagram-label" x="418" y="153">+</text>
+        <path class="icon" d="M432 118h26l10 10v40h-36zM458 118v10h10"/>
+        <circle class="icon" cx="450" cy="146" r="9"/>
+        <circle class="icon" cx="450" cy="146" r="2"/>
+        <text class="diagram-label" x="450" y="192">Fichier .iso</text>
+
+        <path class="icon" d="M160 275h26l10 10v40h-36zM186 275v10h10"/>
+        <circle class="icon" cx="178" cy="303" r="9"/>
+        <circle class="icon" cx="178" cy="303" r="2"/>
+        <text class="diagram-label" x="178" y="352">Fichier .iso</text>
+
+        <path class="icon" d="M327 268h20v14h-20zM333 273h2M339 273h2"/>
+        <rect class="icon" x="321" y="282" width="32" height="44" rx="5"/>
+        <text class="diagram-label" x="337" y="352">Clé USB bootable</text>
+      </svg>
+    </div>
+    <div class="panel">
+      <ul>
+        <li>Depuis <code>microsoft.com</code>, on peut télécharger directement le <strong>fichier ISO</strong> de Windows, ou le <strong>Media Creation Tool</strong>.</li>
+        <li>Le <strong>Media Creation Tool</strong> produit au choix&nbsp;:
+          <ul>
+            <li>un <strong>fichier ISO</strong>&nbsp;;</li>
+            <li>une <strong>clé USB bootable</strong>.</li>
+          </ul>
+        </li>
+        <li><strong>Rufus</strong>, associé à un <strong>fichier ISO</strong>, produit une <strong>clé USB bootable</strong>.</li>
+      </ul>
+      <p>Le DVD bootable existe encore mais est devenu rare&nbsp;: aujourd'hui, on utilise presque toujours une clé USB.</p>
+    </div>
+  </section>
+
+  <section class="lesson-card">
+    <h2>Récapitulatif&nbsp;: installer l'OS</h2>
+    <div class="diagram-scroll">
+      <svg class="diagram" viewBox="0 0 580 210" role="img" aria-labelledby="os-install-title">
+        <title id="os-install-title">Au démarrage du PC, le firmware (BIOS / UEFI) démarre sur la clé USB bootable, qui installe l'OS sur le disque (HDD / SSD).</title>
+        <defs>
+          <marker id="os-install-arrow" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path class="arrowhead-usb" d="M0 0 10 5 0 10z"/></marker>
+        </defs>
+
+        <path class="arrow arrow-usb" d="M75 122H104" marker-end="url(#os-install-arrow)"/>
+        <path class="arrow arrow-usb" d="M192 120C226 120 210 46 230 46H236" marker-end="url(#os-install-arrow)"/>
+        <path class="arrow arrow-usb" d="M330 70V88" marker-end="url(#os-install-arrow)"/>
+        <path class="arrow arrow-usb" d="M358 140H452" marker-end="url(#os-install-arrow)"/>
+
+        <path class="icon" d="M59 106.4A18 18 0 1 1 41 106.4M50 100v18"/>
+        <text class="diagram-label" x="50" y="165">Démarrage</text>
+
+        <rect class="icon" x="120" y="60" width="70" height="120" rx="6"/>
+        <circle class="icon" cx="155" cy="78" r="5"/>
+        <path class="icon" d="M135 110h40M135 122h40M135 134h40M135 146h40"/>
+
+        <rect class="node" x="250" y="20" width="160" height="50" rx="4"/>
+        <text class="diagram-label" x="330" y="42">Firmware</text>
+        <text class="diagram-note" x="330" y="60">(BIOS / UEFI)</text>
+
+        <path class="icon" d="M320 104h20v14h-20zM326 109h2M332 109h2"/>
+        <rect class="icon" x="314" y="118" width="32" height="42" rx="5"/>
+        <text class="diagram-label" x="330" y="195">Clé USB bootable</text>
+
+        <text class="diagram-note" x="410" y="130">installation</text>
+
+        <rect class="icon" x="470" y="105" width="60" height="70" rx="6"/>
+        <circle class="icon" cx="500" cy="134" r="18"/>
+        <circle class="icon" cx="500" cy="134" r="4"/>
+        <path class="icon" d="M486 165 498 142"/>
+        <text class="diagram-label" x="500" y="195">HDD / SSD</text>
+      </svg>
+    </div>
+    <section class="worked-step">
+      <h3><span class="question-number">1</span><span>Démarrage</span></h3>
+      <div class="panel"><p>On branche la clé USB bootable et on allume le PC.</p></div>
+    </section>
+    <section class="worked-step">
+      <h3><span class="question-number">2</span><span>Firmware (BIOS / UEFI)</span></h3>
+      <div class="panel"><p>Le premier programme qui s'exécute est le <strong>firmware</strong> de la carte mère (BIOS ou UEFI). C'est lui qui choisit sur quel support démarrer&nbsp;: il faut qu'il démarre sur la <strong>clé USB</strong>.</p>
+      <p>Pour ce faire, il faut ouvrir le <strong>menu de démarrage</strong> (souvent avec une touche comme <kbd>F12</kbd>, <kbd>F11</kbd> ou <kbd>Échap</kbd>, selon le fabricant) ou modifier l'<strong>ordre de démarrage</strong> dans les réglages du firmware.</p></div>
+    </section>
+    <section class="worked-step">
+      <h3><span class="question-number">3</span><span>Clé USB bootable</span></h3>
+      <div class="panel"><p>Le PC démarre sur la clé, qui lance le programme d'installation de l'OS.</p></div>
+    </section>
+    <section class="worked-step">
+      <h3><span class="question-number">4</span><span>Installation sur le disque (HDD / SSD)</span></h3>
+      <div class="panel"><p>Le programme d'installation copie l'OS sur le <strong>disque dur</strong> (HDD) ou le <strong>SSD</strong> de l'ordinateur. Une fois l'installation terminée, on peut retirer la clé&nbsp;: le PC démarrera désormais directement sur son disque et lancera l'OS qui y est installé.</p></div>
+    </section>
+  </section>
+</main>
+</body>
+</html>
