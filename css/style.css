@@ -200,6 +200,33 @@ h1 {
   background: none;
 }
 
+.info-box {
+  margin: 0.75rem 0;
+  padding: 0.75rem clamp(0.75rem, 3.5vw, 1rem);
+  border-left: 0.25rem solid var(--accent);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
+.info-box p {
+  margin: 0.4rem 0;
+}
+
+.info-box .info-box-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.info-box-title svg {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
 .lesson-card > h2 code {
   font-family: var(--mono);
 }
