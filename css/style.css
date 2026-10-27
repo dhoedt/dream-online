@@ -859,8 +859,38 @@ input[type="radio"] {
     grid-template-columns: auto minmax(0, 1fr);
   }
 
+  /* Layer row: input across the whole row, badge centered on it. */
+  input.layer-name {
+    max-width: none;
+    min-height: 2.75rem;
+  }
+
+  .layer > .question-number {
+    margin-top: calc((2.75rem - 1.7rem) / 2);
+  }
+
+  /* Illustrations as small chips (icon beside its caption) under the description. */
   .layer-icons {
     grid-column: 2;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: -0.2rem;
+  }
+
+  .layer-icons li {
+    flex-direction: row;
+    gap: 0.35rem;
+    width: auto;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--panel);
+    font-size: 0.8rem;
+  }
+
+  .layer-icons svg {
+    width: 1.1rem;
+    height: 1.1rem;
   }
 
   /* Four octets stay on one line: inputs share the row width and the text shrinks with the viewport so 8 bits still fit. */
