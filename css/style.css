@@ -65,6 +65,7 @@ h1 {
 }
 
 .intro {
+  max-width: 70ch;
   margin: 0 0 1.5rem;
   color: var(--muted);
 }
@@ -121,12 +122,20 @@ h1 {
 }
 
 .statement {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
   border-left: 0.35rem solid var(--accent);
+  container-type: inline-size;
+}
+
+/* Address followed by the buttons on a single line, at every width. */
+.statement-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.statement-value {
+  min-width: 0;
 }
 
 .statement-label {
@@ -138,13 +147,21 @@ h1 {
 .statement-address {
   margin: 0;
   font-family: var(--mono);
-  font-size: clamp(1.1rem, 6.5vw, 2.2rem);
+  /* Card width minus the two buttons, divided by the width of "255.255.255.255/30" (≈ 11.5em). */
+  font-size: clamp(0.8rem, (100cqi - 7rem) / 11.5, 2.2rem);
   font-weight: 600;
   letter-spacing: 0.02em;
 }
 
-#custom-form {
-  margin-top: 0.4rem;
+/* Too narrow to keep the address readable beside the buttons: the buttons move below it. */
+@container (max-width: 20rem) {
+  .statement-row {
+    flex-wrap: wrap;
+  }
+
+  .statement-address {
+    font-size: clamp(1.1rem, 100cqi / 11.5, 2.2rem);
+  }
 }
 
 .custom-help {
@@ -157,8 +174,8 @@ h1 {
 
 .statement-actions {
   display: flex;
-  flex-direction: column;
   gap: 0.5rem;
+  margin-left: auto;
 }
 
 .icon-button {
@@ -168,6 +185,20 @@ h1 {
   min-width: 2.75rem;
   min-height: 2.75rem;
   padding: 0.5rem;
+}
+
+.icon-button.is-confirm,
+.icon-button.is-confirm:hover:not(:disabled) {
+  border-color: var(--success);
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.icon-button.is-cancel,
+.icon-button.is-cancel:hover:not(:disabled) {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
 .icon-button svg {
@@ -193,7 +224,7 @@ h1 {
   line-height: 1.3;
 }
 
-/* Le panneau de premier niveau d'une leçon ne rajoute pas de seconde boîte dans la carte. */
+/* A lesson's top-level panel does not add a second box inside the card. */
 .lesson-card > .panel {
   margin-top: 0;
   padding: 0;
@@ -345,8 +376,11 @@ input {
   text-align: center;
 }
 
-input.binary { width: calc(8ch + 1.2rem); }
 input.decimal { width: calc(3ch + 1.4rem); }
+
+/* In questions, an octet has the same width in binary and decimal, so rows line up from one question to the next. */
+input.binary,
+.question input.decimal { width: calc(8ch + 1.2rem); }
 input.count { width: calc(8ch + 1.4rem); }
 input.prefix { width: calc(2ch + 1.4rem); }
 
@@ -372,6 +406,12 @@ input:read-only {
   align-items: center;
   gap: 0.5rem 1rem;
   margin-top: 1rem;
+}
+
+/* Separates the exercise fields from the buttons. */
+.question .actions {
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border);
 }
 
 button {
@@ -408,16 +448,18 @@ button:disabled {
 .feedback.is-correct { color: var(--success); }
 .feedback.is-wrong { color: var(--danger); }
 
-.help {
+/* Separator only while a hint or answer panel is open. */
+.help:has(> .panel:not([hidden])) {
   margin-top: 1rem;
-  padding-top: 1rem;
   border-top: 1px dashed var(--border);
 }
 
+/* Pushed to the far right of the actions row, opposite the "Vérifier" button. */
 .help-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-left: auto;
 }
 
 .panel {
@@ -450,6 +492,7 @@ button:disabled {
 }
 
 .alternative-method summary {
+  padding-block: 0.6rem;
   cursor: pointer;
   font-weight: 600;
 }
@@ -471,7 +514,7 @@ button:disabled {
 .binary-table {
   border-collapse: collapse;
   font-family: var(--mono);
-  font-size: clamp(0.65rem, 3.2vw, 0.9rem);
+  font-size: clamp(0.75rem, 3.2vw, 0.9rem);
   white-space: nowrap;
 }
 
@@ -496,7 +539,7 @@ button:disabled {
 .weight-table {
   border-collapse: collapse;
   font-family: var(--mono);
-  font-size: clamp(0.7rem, 3.2vw, 0.9rem);
+  font-size: clamp(0.75rem, 3.2vw, 0.9rem);
 }
 
 .weight-table th,
@@ -532,10 +575,16 @@ button:disabled {
   color: var(--muted);
 }
 
-/* Diagrammes SVG des leçons : défilement horizontal sur petit écran pour garder le texte lisible. */
+/* Lesson SVG diagrams: horizontal scrolling on small screens to keep the text readable.
+   A shadow appears on the edge where there is still content to scroll to. */
 .diagram-scroll {
   overflow-x: auto;
   margin-bottom: 1rem;
+  background:
+    linear-gradient(to right, var(--surface) 30%, transparent) left / 2.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--surface) 30%, transparent) right / 2.5rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 0.2), transparent) left / 0.9rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 0.2), transparent) right / 0.9rem 100% no-repeat scroll;
 }
 
 .diagram {
@@ -731,6 +780,12 @@ input.layer-name {
   text-align: left;
 }
 
+.exam-table tbody th label {
+  display: block;
+  padding-block: 0.2rem;
+  cursor: pointer;
+}
+
 .exam-table tr.is-wrong > * { background: var(--danger-soft); }
 .exam-table tr.is-correct > * { background: var(--success-soft); }
 
@@ -789,16 +844,44 @@ input[type="radio"] {
     grid-column: 2;
   }
 
-  /* Quatre octets binaires ne tiennent pas sur une ligne : deux par ligne, le point final annonce la suite. */
-  .fields:has(input.binary) {
+  /* Four octets stay on one line: inputs share the row width and the text shrinks with the viewport so 8 bits still fit. */
+  .fields:has(input.binary),
+  .question .fields:has(input.decimal) {
     display: grid;
-    grid-template-columns: repeat(4, auto);
-    justify-content: start;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 0.15rem;
+  }
+
+  .fields:has(input.binary) input,
+  .question .fields:has(input.decimal) input {
+    width: 100%;
+    padding-inline: 0.15rem;
+    font-size: min(1rem, 3.1vw);
   }
 
   input.decimal { width: calc(3ch + 1rem); }
 
-  /* Libellé et valeur décimale sur une ligne, les 32 bits en dessous : le tableau tient sans défilement. */
+  .tabs [role="tab"] {
+    padding-inline: 0.6rem;
+  }
+
+  /* Decimal / binary of the four octets: transposed into two columns, one octet per row. */
+  .octet-table tbody {
+    display: grid;
+    grid-template-rows: repeat(5, auto);
+    grid-auto-flow: column;
+  }
+
+  .octet-table tr {
+    display: contents;
+  }
+
+  .octet-table th,
+  .octet-table td {
+    margin: -1px 0 0 -1px;
+  }
+
+  /* Label and decimal value on one line, the 32 bits below: the table fits without scrolling. */
   .binary-table,
   .binary-table tbody {
     display: block;
@@ -813,6 +896,7 @@ input[type="radio"] {
   .binary-table td:first-of-type {
     grid-row: 2;
     grid-column: 1 / -1;
+    white-space: normal;
   }
 
   .binary-table .result-row {
@@ -828,7 +912,17 @@ input[type="radio"] {
   .weight-table th,
   .weight-table td {
     min-width: 0;
-    padding: 0.3rem 0.35rem;
+    padding: 0.3rem 0.2rem;
+  }
+}
+
+/* Smallest phones: compact buttons so paired buttons ("Afficher l'indice" / "Afficher la réponse",
+   exam versions) stay side by side instead of stacking one per line. */
+@media (max-width: 24rem) {
+  .actions button,
+  .version-switch button {
+    padding-inline: 0.5rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -837,5 +931,9 @@ input[type="radio"] {
   .back-link,
   input {
     min-height: 2.75rem;
+  }
+
+  input.option-choice {
+    min-width: 2.75rem;
   }
 }

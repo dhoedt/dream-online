@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Exercice : les options de récupération de Windows 11</title>
 <link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:,">
 </head>
 <body>
 <main>
@@ -40,12 +41,12 @@
         <button type="submit" class="primary">Vérifier</button>
         <button type="button" id="restart">Recommencer</button>
         <p class="feedback" role="status"></p>
+        <div class="help-buttons">
+          <button type="button" data-panel="hint" aria-expanded="false">Afficher l'indice</button>
+        </div>
       </div>
     </form>
     <div class="help">
-      <div class="help-buttons">
-        <button type="button" data-panel="hint" aria-expanded="false">Afficher l'indice</button>
-      </div>
       <div class="panel" data-panel-content="hint" hidden>
         <h3>Indice</h3>
         <ul>
@@ -83,7 +84,7 @@
     infected: { text: 'Vous pensez que votre appareil a été infecté.', solution: 'reinstall' },
   };
 
-  // Chaque version reproduit une fiche d'examen : ordre des problèmes, numérotation des options et façon de répondre.
+  // Each version reproduces an exam sheet: order of the problems, numbering of the options and how to answer.
   const VERSIONS = {
     '02': {
       intro: 'Pour chaque problème rencontré, indiquez le numéro de l\'option à effectuer pour essayer de le résoudre.',

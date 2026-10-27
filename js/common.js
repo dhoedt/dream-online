@@ -3,12 +3,24 @@ const PANEL_LABELS = {
   answer: { show: 'Afficher la réponse', hide: 'Masquer la réponse' },
 };
 
-function togglePanel(section, toggleButton) {
+function setPanelOpen(section, toggleButton, isOpen) {
   const panelName = toggleButton.dataset.panel;
-  const panel = section.querySelector(`[data-panel-content="${panelName}"]`);
-  panel.hidden = !panel.hidden;
-  toggleButton.setAttribute('aria-expanded', String(!panel.hidden));
-  toggleButton.textContent = panel.hidden ? PANEL_LABELS[panelName].show : PANEL_LABELS[panelName].hide;
+  section.querySelector(`[data-panel-content="${panelName}"]`).hidden = !isOpen;
+  toggleButton.setAttribute('aria-expanded', String(isOpen));
+  toggleButton.textContent = isOpen ? PANEL_LABELS[panelName].hide : PANEL_LABELS[panelName].show;
+}
+
+// Only one panel open at a time: opening the hint closes the answer, and vice versa.
+function togglePanel(section, toggleButton) {
+  const isOpen = toggleButton.getAttribute('aria-expanded') !== 'true';
+  if (isOpen) {
+    for (const otherButton of section.querySelectorAll('[data-panel]')) {
+      if (otherButton !== toggleButton) {
+        setPanelOpen(section, otherButton, false);
+      }
+    }
+  }
+  setPanelOpen(section, toggleButton, isOpen);
 }
 
 function setFieldWrong(input, isWrong) {

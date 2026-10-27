@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Exercices de réseaux</title>
 <link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:,">
 </head>
 <body>
 <main>
@@ -72,7 +73,7 @@
 <script>
   const tabs = [...document.querySelectorAll('[role="tab"]')];
 
-  // L'onglet actif est gardé dans l'URL (#lessons, #exercises…) pour survivre au retour arrière.
+  // The active tab is kept in the URL (#lessons, #exercises…) so it survives the back button.
   function selectTab(panelId) {
     for (const tab of tabs) {
       const isSelected = tab.getAttribute('aria-controls') === panelId;

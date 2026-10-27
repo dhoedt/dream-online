@@ -146,8 +146,9 @@ function formatDotted(value) {
   return intToOctets(value).join('.');
 }
 
+// <wbr>: on small screens the binary address wraps after a dot, never in the middle of an octet.
 function formatBinaryDotted(value) {
-  return intToOctets(value).map(octetToBinary).join('.');
+  return intToOctets(value).map(octetToBinary).join('.<wbr>');
 }
 
 function prefixToMask(prefix) {
@@ -162,7 +163,7 @@ function createExercise(address, prefix) {
   return { address, prefix, mask, hostBits, network, broadcast, usableHosts: 2 ** hostBits - 2 };
 }
 
-// revealedBitCount < 8 laisse les bits suivants vides, pour remplir le tableau pas à pas ; le dernier bit révélé peut être mis en gras.
+// revealedBitCount < 8 leaves the following bits empty, to fill the table step by step; the last revealed bit can be bolded.
 function renderWeightTable(octet, { revealedBitCount = BIT_WEIGHTS.length, highlightLastBit = false } = {}) {
   const isRevealed = (index) => index < revealedBitCount;
   const cellClass = (weight, index) => (isRevealed(index) && octet & weight ? ' class="is-set"' : '');
@@ -229,9 +230,9 @@ function explainAddressBinaryConversion(address) {
     <p>Les trois autres octets se convertissent de la même manière&nbsp;:</p>
     <ul>${otherConversions}</ul>
     ${paddingNote}
-    <p>L'adresse complète, octet par octet, en décimal (au-dessus) et en binaire (en dessous)&nbsp;:</p>
+    <p>L'adresse complète, octet par octet, en décimal et en binaire&nbsp;:</p>
     <div class="binary-scroll">
-      <table class="weight-table">
+      <table class="weight-table octet-table">
         <tbody>
           <tr><th scope="row">Décimal</th>${decimalCells}</tr>
           <tr><th scope="row">Binaire</th>${binaryCells}</tr>
@@ -293,7 +294,8 @@ function renderBits(value, prefix) {
   let networkPart = '';
   let hostPart = '';
   for (let i = 0; i < 32; i++) {
-    const separator = i > 0 && i % 8 === 0 ? '.' : '';
+    // <wbr> lets narrow screens wrap between octets instead of shrinking the text.
+    const separator = i > 0 && i % 8 === 0 ? '.<wbr>' : '';
     if (i < prefix) {
       networkPart += separator + bits[i];
     } else {

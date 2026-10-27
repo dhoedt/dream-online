@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Exercice : le masque de sous-réseau</title>
 <link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:,">
 </head>
 <body>
 <main>
@@ -30,42 +31,50 @@
 
   <h1>Exercice&nbsp;: le masque de sous-réseau</h1>
   <div class="statement" id="statement">
-    <div>
-      <p class="statement-label">Adresse IPv4 d'une machine et son masque de sous-réseau (subnet mask)</p>
-      <p class="statement-address" id="statement-address"></p>
-      <form novalidate id="custom-form" hidden>
-        <div class="fields" role="group" aria-label="Adresse IPv4 et préfixe (de /8 à /30)">
-          <input type="text" class="decimal" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="3" aria-label="Adresse IPv4, octet 1 sur 4">
-          <span class="dot" aria-hidden="true">.</span>
-          <input type="text" class="decimal" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="3" aria-label="Adresse IPv4, octet 2 sur 4">
-          <span class="dot" aria-hidden="true">.</span>
-          <input type="text" class="decimal" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="3" aria-label="Adresse IPv4, octet 3 sur 4">
-          <span class="dot" aria-hidden="true">.</span>
-          <input type="text" class="decimal" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="3" aria-label="Adresse IPv4, octet 4 sur 4">
-          <span class="dot" aria-hidden="true">/</span>
-          <input type="text" class="prefix" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="2" aria-label="Préfixe">
-        </div>
-        <p class="group-label custom-help">Entrée pour valider, Échap pour annuler.</p>
-      </form>
-      <p class="feedback" role="status"></p>
+    <p class="statement-label">Adresse IPv4 d'un hôte et son masque de sous-réseau</p>
+    <div class="statement-row">
+      <div class="statement-value">
+        <p class="statement-address" id="statement-address"></p>
+        <form novalidate id="custom-form" hidden>
+          <div class="fields" role="group" aria-label="Adresse IPv4 et préfixe (de /8 à /30)">
+            <input type="text" class="decimal" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="3" aria-label="Adresse IPv4, octet 1 sur 4">
+            <span class="dot" aria-hidden="true">.</span>
+            <input type="text" class="decimal" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="3" aria-label="Adresse IPv4, octet 2 sur 4">
+            <span class="dot" aria-hidden="true">.</span>
+            <input type="text" class="decimal" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="3" aria-label="Adresse IPv4, octet 3 sur 4">
+            <span class="dot" aria-hidden="true">.</span>
+            <input type="text" class="decimal" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="3" aria-label="Adresse IPv4, octet 4 sur 4">
+            <span class="dot" aria-hidden="true">/</span>
+            <input type="text" class="prefix" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="2" aria-label="Préfixe">
+          </div>
+        </form>
+      </div>
+      <div class="statement-actions">
+        <button type="button" class="icon-button" id="new-exercise" title="Générer un exercice" aria-label="Générer un exercice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
+            <path d="M21 3v5h-5"/>
+          </svg>
+        </button>
+        <button type="button" class="icon-button" id="edit-exercise" form="custom-form" title="Exercice sur mesure" aria-label="Exercice sur mesure">
+          <svg data-icon="edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>
+          </svg>
+          <svg data-icon="confirm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+            <path d="M20 6 9 17l-5-5"/>
+          </svg>
+        </button>
+        <button type="button" class="icon-button is-cancel" id="cancel-edit" title="Annuler" aria-label="Annuler" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+          </svg>
+        </button>
+      </div>
     </div>
-    <div class="statement-actions">
-      <button type="button" class="icon-button" id="new-exercise" title="Générer un exercice" aria-label="Générer un exercice">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
-          <path d="M21 3v5h-5"/>
-        </svg>
-      </button>
-      <button type="button" class="icon-button" id="edit-exercise" form="custom-form" title="Exercice sur mesure" aria-label="Exercice sur mesure">
-        <svg data-icon="edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-          <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>
-        </svg>
-        <svg data-icon="confirm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
-          <path d="M20 6 9 17l-5-5"/>
-        </svg>
-      </button>
-    </div>
+    <p class="group-label custom-help" id="custom-help" hidden>Entrée pour valider, Échap pour annuler.</p>
+    <p class="feedback" role="status"></p>
   </div>
 
   <div id="questions"></div>
@@ -137,13 +146,13 @@
         <div class="actions">
           <button type="submit" class="primary">Vérifier</button>
           <p class="feedback" role="status"></p>
+          <div class="help-buttons">
+            <button type="button" data-panel="hint" aria-expanded="false">${PANEL_LABELS.hint.show}</button>
+            <button type="button" data-panel="answer" aria-expanded="false">${PANEL_LABELS.answer.show}</button>
+          </div>
         </div>
       </form>
       <div class="help">
-        <div class="help-buttons">
-          <button type="button" data-panel="hint" aria-expanded="false">${PANEL_LABELS.hint.show}</button>
-          <button type="button" data-panel="answer" aria-expanded="false">${PANEL_LABELS.answer.show}</button>
-        </div>
         <div class="panel" data-panel-content="hint" hidden><h3>Indice</h3>${question.hint}</div>
         <div class="panel" data-panel-content="answer" hidden><h3>Réponse</h3>${question.explain(exercise)}</div>
       </div>`;
@@ -253,7 +262,7 @@
     window.scrollTo(0, 0);
   }
 
-  // Champs indexés 0 à 3 pour les octets, 4 pour le préfixe.
+  // Fields indexed 0 to 3 for the octets, 4 for the prefix.
   function parseCustomExercise(octetTexts, prefixText) {
     const octets = octetTexts.map((text) => parseField(text, DECIMAL_OCTET));
     const malformedFields = octets.flatMap((octet, fieldIndex) => (octet === null ? [fieldIndex] : []));
@@ -281,12 +290,19 @@
   const customForm = document.getElementById('custom-form');
   const customInputs = [...customForm.querySelectorAll('input')];
   const editButton = document.getElementById('edit-exercise');
+  const newExerciseButton = document.getElementById('new-exercise');
+  const cancelButton = document.getElementById('cancel-edit');
   let isEditing = false;
 
+  // In edit mode, confirm (green) and cancel (red) replace "Générer un exercice".
   function setEditing(editing, fieldTexts = [...intToOctets(exercise.address), exercise.prefix]) {
     isEditing = editing;
     customForm.hidden = !editing;
+    document.getElementById('custom-help').hidden = !editing;
     document.getElementById('statement-address').hidden = editing;
+    newExerciseButton.hidden = editing;
+    cancelButton.hidden = !editing;
+    editButton.classList.toggle('is-confirm', editing);
     editButton.type = editing ? 'submit' : 'button';
     editButton.querySelector('[data-icon="edit"]').hidden = editing;
     editButton.querySelector('[data-icon="confirm"]').hidden = !editing;
@@ -301,6 +317,9 @@
     if (editing) {
       customInputs[0].focus();
       customInputs[0].select();
+    } else {
+      // The field or button that had focus has just been hidden.
+      editButton.focus();
     }
   }
 
@@ -310,7 +329,7 @@
     customInputs[result.wrongFields[0]].focus();
   }
 
-  // Lien partageable : ?ip=192.168.1.10/24 charge cet exercice ; s'il est invalide, l'erreur s'affiche en mode édition.
+  // Shareable link: ?ip=192.168.1.10/24 loads this exercise; if it is invalid, the error is shown in edit mode.
   function startFromUrl() {
     const sharedAddress = new URLSearchParams(location.search).get('ip');
     const match = sharedAddress && sharedAddress.match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)\/(\d+)$/);
@@ -348,7 +367,7 @@
   });
   attachFieldNavigation(customForm);
 
-  // En mode édition, le bouton est de type submit et valide le formulaire ; sinon il ouvre l'édition.
+  // In edit mode the button is a submit button and validates the form; otherwise it opens edit mode.
   editButton.addEventListener('click', (event) => {
     if (!isEditing) {
       event.preventDefault();
@@ -356,12 +375,9 @@
     }
   });
 
-  document.getElementById('new-exercise').addEventListener('click', () => {
-    if (isEditing) {
-      setEditing(false);
-    }
-    startExercise(generateExercise());
-  });
+  cancelButton.addEventListener('click', () => setEditing(false));
+
+  newExerciseButton.addEventListener('click', () => startExercise(generateExercise()));
 
   startFromUrl();
 </script>
