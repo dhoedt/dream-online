@@ -139,7 +139,7 @@
           <p class="feedback" role="status"></p>
         </div>
       </form>
-      <div class="help" hidden>
+      <div class="help">
         <div class="help-buttons">
           <button type="button" data-panel="hint" aria-expanded="false">${PANEL_LABELS.hint.show}</button>
           <button type="button" data-panel="answer" aria-expanded="false">${PANEL_LABELS.answer.show}</button>
@@ -233,7 +233,6 @@
     if (mismatchedFields.length > 0) {
       mismatchedFields.forEach((input) => setFieldWrong(input, true));
       setFeedback(section, '✗ Incorrect. Corrigez les champs signalés et réessayez, ou consultez l\'aide ci-dessous.', 'is-wrong');
-      section.querySelector('.help').hidden = false;
       return;
     }
 
