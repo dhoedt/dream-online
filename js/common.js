@@ -7,7 +7,14 @@ function setPanelOpen(section, toggleButton, isOpen) {
   const panelName = toggleButton.dataset.panel;
   section.querySelector(`[data-panel-content="${panelName}"]`).hidden = !isOpen;
   toggleButton.setAttribute('aria-expanded', String(isOpen));
-  toggleButton.textContent = isOpen ? PANEL_LABELS[panelName].hide : PANEL_LABELS[panelName].show;
+  const label = isOpen ? PANEL_LABELS[panelName].hide : PANEL_LABELS[panelName].show;
+  // Icon buttons keep their icon: only their tooltip and accessible name change.
+  if (toggleButton.classList.contains('icon-button')) {
+    toggleButton.title = label;
+    toggleButton.setAttribute('aria-label', label);
+  } else {
+    toggleButton.textContent = label;
+  }
 }
 
 // Only one panel open at a time: opening the hint closes the answer, and vice versa.

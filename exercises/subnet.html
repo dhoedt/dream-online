@@ -147,7 +147,13 @@
           <button type="submit" class="primary">Vérifier</button>
           <p class="feedback" role="status"></p>
           <div class="help-buttons">
-            <button type="button" data-panel="hint" aria-expanded="false">${PANEL_LABELS.hint.show}</button>
+            <button type="button" class="icon-button" data-panel="hint" aria-expanded="false" title="${PANEL_LABELS.hint.show}" aria-label="${PANEL_LABELS.hint.show}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+                <path d="M9 18h6"/>
+                <path d="M10 22h4"/>
+              </svg>
+            </button>
             <button type="button" data-panel="answer" aria-expanded="false">${PANEL_LABELS.answer.show}</button>
           </div>
         </div>

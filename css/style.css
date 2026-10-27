@@ -13,6 +13,7 @@
   --panel: #f0f4fa;
   --network-bits: #1f5fbf;
   --host-bits: #b45309;
+  --hint: #d99a00;
   --mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", monospace;
 }
 
@@ -32,6 +33,7 @@
     --panel: #222a35;
     --network-bits: #6ea8ff;
     --host-bits: #f0a94b;
+    --hint: #fcc934;
   }
 }
 
@@ -199,6 +201,20 @@ h1 {
   border-color: var(--danger);
   background: var(--danger-soft);
   color: var(--danger);
+}
+
+/* Panel toggle shown as an icon: highlighted while its panel is open. */
+.icon-button[aria-expanded="true"] {
+  border-color: var(--accent);
+  background: var(--panel);
+  color: var(--accent);
+}
+
+/* Hint lightbulb: yellow outline, lit up (filled) while the hint is open. */
+.icon-button[data-panel="hint"] { color: var(--hint); }
+
+.icon-button[data-panel="hint"][aria-expanded="true"] svg {
+  fill: color-mix(in srgb, var(--hint) 35%, transparent);
 }
 
 .icon-button svg {
@@ -791,6 +807,9 @@ input.layer-name {
 
 input.option-choice { width: calc(1ch + 1.4rem); }
 
+/* The toggle only exists on phones, where the options table becomes a drawer pinned to the bottom of the screen. */
+.options-toggle { display: none; }
+
 input[type="radio"] {
   width: 1.25rem;
   height: 1.25rem;
@@ -860,6 +879,78 @@ input[type="radio"] {
   }
 
   input.decimal { width: calc(3ch + 1rem); }
+
+  /* Buttons share one line; the feedback message goes below them instead of between them. */
+  .actions { column-gap: 0.5rem; }
+
+  .actions .feedback {
+    order: 1;
+    flex-basis: 100%;
+  }
+
+  .actions .feedback:empty { display: none; }
+
+  /* Options table as a bottom drawer: stays on screen while answering the problems above it,
+     and falls back into the page flow once its natural position is reached. */
+  .options-drawer {
+    position: sticky;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    z-index: 1;
+    margin-bottom: 1rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 0.25);
+  }
+
+  .options-drawer.is-open {
+    max-height: 55vh;
+    max-height: 55dvh;
+    overflow-y: auto;
+    border: 1px solid var(--accent);
+    background: var(--surface);
+  }
+
+  .options-drawer:not(.is-open) .exam-table { display: none; }
+
+  /* The drawer border replaces the table's outer border. */
+  .options-drawer .exam-table {
+    margin-bottom: 0;
+    border-style: hidden;
+  }
+
+  .options-toggle {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    border: 0;
+    border-radius: 0.6rem;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 600;
+  }
+
+  .is-open > .options-toggle { border-radius: 0; }
+
+  /* Chevron: points up while closed (the drawer opens upward), down while open. */
+  .options-toggle::after {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-top: 0.25rem;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 0.2s;
+  }
+
+  .is-open > .options-toggle::after {
+    margin-top: -0.25rem;
+    transform: rotate(135deg);
+  }
 
   .tabs [role="tab"] {
     padding-inline: 0.6rem;
