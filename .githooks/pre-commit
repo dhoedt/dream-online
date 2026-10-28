@@ -1,0 +1,18 @@
+#!/bin/sh
+# Cache busting: rewrite the ?v= query string of every staged CSS/JS asset
+# reference in the HTML pages with the asset's staged content hash.
+# Enable once per clone with: git config core.hooksPath .githooks
+
+staged_assets=$(git diff --cached --name-only --diff-filter=ACMR -- 'css/*.css' 'js/*.js')
+[ -z "$staged_assets" ] && exit 0
+
+for asset in $staged_assets; do
+  version=$(git rev-parse --short=8 ":$asset")
+  asset_regex=$(printf '%s' "$asset" | sed 's/\./\\./g')
+
+  for page in $(git grep -l -F "$asset" -- '*.html'); do
+    sed -i -E "s#${asset_regex}(\?v=[^\"]*)?\"#${asset}?v=${version}\"#g" "$page"
+    git add "$page"
+    echo "cache-bust: $page -> $asset?v=$version"
+  done
+done
