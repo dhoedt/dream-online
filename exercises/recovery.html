@@ -57,6 +57,7 @@
               <path d="M10 22h4"/>
             </svg>
           </button>
+          <button type="button" data-panel="answer" aria-expanded="false">Afficher la réponse</button>
         </div>
       </div>
     </form>
@@ -68,6 +69,13 @@
           <li>Le PC <strong>ne démarre pas</strong>&nbsp;: on tente d'abord la réparation automatique, puis on utilise le lecteur de récupération s'il existe, sinon un support d'installation.</li>
           <li>Quand plus rien ne marche, ou en cas d'infection, on <strong>réinstalle</strong> complètement Windows&nbsp;11.</li>
         </ul>
+      </div>
+      <div class="panel" data-panel-content="answer" hidden>
+        <h3>Réponse</h3>
+        <table class="exam-table">
+          <thead id="answers-head"></thead>
+          <tbody id="answers"></tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -178,6 +186,20 @@
       </tr>`;
   }
 
+  function renderAnswer(problemKey) {
+    const solutionKey = PROBLEMS[problemKey].solution;
+    return `
+      <tr>
+        <th scope="row">${PROBLEMS[problemKey].text}</th>
+        <td class="narrow-column option-number">${expectedNumber(problemKey)}</td>
+        <td>${OPTIONS[solutionKey]}</td>
+      </tr>`;
+  }
+
+  function renderAnswersHead() {
+    return `<tr><th scope="col">Problèmes rencontrés</th><th scope="col" class="narrow-column">N°</th><th scope="col">${version.optionsTitle}</th></tr>`;
+  }
+
   function readAnswer(row) {
     if (version.answerMode === 'grid') {
       const checkedChoice = row.querySelector('input:checked');
@@ -237,6 +259,8 @@
     document.getElementById('problems').innerHTML = version.problems.map(renderProblem).join('');
     document.getElementById('options-head').innerHTML = renderOptionsHead();
     document.getElementById('options').innerHTML = version.options.map(renderOption).join('');
+    document.getElementById('answers-head').innerHTML = renderAnswersHead();
+    document.getElementById('answers').innerHTML = version.problems.map(renderAnswer).join('');
     setOptionsDrawerOpen(optionsDrawer.classList.contains('is-open'));
     setFeedback(section, '', '');
     section.classList.remove('is-correct');
