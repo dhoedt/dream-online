@@ -33,11 +33,13 @@
       </table>
 
       <div class="options-drawer">
-        <button type="button" class="options-toggle" aria-expanded="false" aria-controls="options-table"></button>
-        <table class="exam-table" id="options-table">
-          <thead id="options-head"></thead>
-          <tbody id="options"></tbody>
-        </table>
+        <button type="button" class="options-toggle" aria-expanded="false" aria-controls="options-panel"></button>
+        <div class="options-panel" id="options-panel">
+          <table class="exam-table">
+            <thead id="options-head"></thead>
+            <tbody id="options"></tbody>
+          </table>
+        </div>
       </div>
 
       <div class="actions">
@@ -180,8 +182,10 @@
       <tr class="problem-row">
         <th scope="row"><label for="problem-${problemIndex}">${problemText}</label></th>
         <td class="narrow-column">
-          <input type="text" id="problem-${problemIndex}" class="option-choice"
-            inputmode="numeric" maxlength="1" autocomplete="off" spellcheck="false">
+          <select id="problem-${problemIndex}" class="option-choice">
+            <option value=""></option>
+            ${optionNumbers().map((number) => `<option value="${number}">${number}</option>`).join('')}
+          </select>
         </td>
       </tr>`;
   }
@@ -205,24 +209,20 @@
       const checkedChoice = row.querySelector('input:checked');
       return checkedChoice ? Number(checkedChoice.value) : null;
     }
-    return Number(row.querySelector('input').value.trim());
+    return Number(row.querySelector('select').value);
   }
 
   function lockRow(row) {
     row.classList.add('is-correct');
-    for (const input of row.querySelectorAll('input')) {
-      if (version.answerMode === 'grid') {
-        input.disabled = true;
-      } else {
-        input.readOnly = true;
-      }
+    for (const field of row.querySelectorAll('input, select')) {
+      field.disabled = true;
     }
   }
 
   function markRowWrong(row, isWrong) {
     row.classList.toggle('is-wrong', isWrong);
     if (version.answerMode === 'number') {
-      setFieldWrong(row.querySelector('input'), isWrong);
+      setFieldWrong(row.querySelector('select'), isWrong);
     }
   }
 
@@ -244,7 +244,7 @@
     if (wrongRows.length > 0) {
       const wrongCountText = wrongRows.length === 1 ? '1 réponse' : `${wrongRows.length} réponses`;
       setFeedback(section, `✗ ${wrongCountText} à corriger. Réessayez, ou consultez l'indice ci-dessous.`, 'is-wrong');
-      wrongRows[0].querySelector('input').focus();
+      wrongRows[0].querySelector('input, select').focus();
       return;
     }
 

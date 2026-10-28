@@ -380,7 +380,8 @@ h1 {
   font-weight: 700;
 }
 
-input {
+input,
+select {
   max-width: 100%;
   padding: 0.45rem 0.5rem;
   border: 1px solid var(--border);
@@ -401,12 +402,14 @@ input.count { width: calc(8ch + 1.4rem); }
 input.prefix { width: calc(2ch + 1.4rem); }
 
 input:focus-visible,
+select:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-input.is-wrong {
+input.is-wrong,
+select.is-wrong {
   border-color: var(--danger);
   background: var(--danger-soft);
 }
@@ -414,6 +417,13 @@ input.is-wrong {
 input:read-only {
   border-color: var(--success);
   background: var(--success-soft);
+}
+
+/* A correct dropdown is disabled (selects cannot be read-only): show it as correct, not greyed out. */
+select:disabled {
+  border-color: var(--success);
+  background: var(--success-soft);
+  opacity: 1;
 }
 
 .actions {
@@ -805,7 +815,8 @@ input.layer-name {
 .exam-table tr.is-wrong > * { background: var(--danger-soft); }
 .exam-table tr.is-correct > * { background: var(--success-soft); }
 
-input.option-choice { width: calc(1ch + 1.4rem); }
+select.option-choice { cursor: pointer; }
+select.option-choice:disabled { cursor: default; }
 
 /* The toggle only exists on phones, where the options table becomes a drawer pinned to the bottom of the screen. */
 .options-toggle { display: none; }
@@ -931,27 +942,32 @@ input[type="radio"] {
     box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 0.25);
   }
 
-  .options-drawer.is-open {
+  /* The options open above the toggle, so the toggle stays where it was clicked. */
+  .options-panel {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
     max-height: 55vh;
     max-height: 55dvh;
     overflow-y: auto;
     border: 1px solid var(--accent);
+    border-bottom: 0;
+    border-radius: 0.6rem 0.6rem 0 0;
     background: var(--surface);
+    box-shadow: 0 -0.25rem 1rem rgb(0 0 0 / 0.25);
   }
 
-  .options-drawer:not(.is-open) .exam-table { display: none; }
+  .options-drawer:not(.is-open) .options-panel { display: none; }
 
-  /* The drawer border replaces the table's outer border. */
-  .options-drawer .exam-table {
+  /* The panel border replaces the table's outer border. */
+  .options-panel .exam-table {
     margin-bottom: 0;
     border-style: hidden;
   }
 
   .options-toggle {
     display: flex;
-    position: sticky;
-    top: 0;
-    z-index: 1;
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
@@ -963,7 +979,7 @@ input[type="radio"] {
     font-weight: 600;
   }
 
-  .is-open > .options-toggle { border-radius: 0; }
+  .is-open > .options-toggle { border-radius: 0 0 0.6rem 0.6rem; }
 
   /* Chevron: points up while closed (the drawer opens upward), down while open. */
   .options-toggle::after {
@@ -1050,11 +1066,12 @@ input[type="radio"] {
 @media (pointer: coarse) {
   button,
   .back-link,
-  input {
+  input,
+  select {
     min-height: 2.75rem;
   }
 
-  input.option-choice {
+  select.option-choice {
     min-width: 2.75rem;
   }
 }
