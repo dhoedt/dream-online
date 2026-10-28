@@ -217,6 +217,10 @@ h1 {
   fill: color-mix(in srgb, var(--hint) 35%, transparent);
 }
 
+/* Answer eye: crossed out while the answer is shown, since clicking it then hides the answer. */
+.icon-button[aria-expanded="true"] .icon-closed,
+.icon-button:not([aria-expanded="true"]) .icon-open { display: none; }
+
 .icon-button svg {
   flex: none;
   width: 1.25rem;
