@@ -25,6 +25,12 @@ rm -rf dist.tmp/.github dist.tmp/.gitattributes dist.tmp/.gitignore \
     done
     echo "cache-bust: $asset?v=$version"
   done
+
+  # Build timestamp in the footer of the home page, in Belgian time.
+  build_datetime=$(TZ=Europe/Brussels date '+%Y-%m-%dT%H:%M%:z')
+  build_label=$(TZ=Europe/Brussels date '+%d/%m/%Y à %H:%M')
+  sed -i "s#<!-- build-time -->#build: <time datetime=\"${build_datetime}\">${build_label}</time>#" index.html
+  echo "build-time: $build_label"
 )
 
 if [ -d dist ]; then
