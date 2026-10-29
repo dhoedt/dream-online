@@ -1,3 +1,5 @@
 .playwright-cli/
 .vscode/
 dist/
+dist.tmp/
+dist.old/
