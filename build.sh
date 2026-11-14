@@ -1,19 +1,17 @@
 #!/bin/sh
-# Builds the deployable site in dist/ from the last commit, then appends ?v=<content hash>
+# Builds the deployable site in dist/ from site/ in the last commit, then appends ?v=<content hash>
 # to every CSS/JS reference in the HTML pages (cache busting).
 # The site is built in dist.tmp/ and swapped in at the end, so dist/ is never half-built.
 set -e
 cd "$(dirname "$0")"
 
-if [ -n "$(git status --porcelain)" ]; then
-  echo "warning: uncommitted changes are NOT included in the build" >&2
+if [ -n "$(git status --porcelain -- site)" ]; then
+  echo "warning: uncommitted changes in site/ are NOT included in the build" >&2
 fi
 
 rm -rf dist.tmp dist.old
 mkdir dist.tmp
-git archive HEAD | tar -x -C dist.tmp
-rm -rf dist.tmp/.github dist.tmp/.gitattributes dist.tmp/.gitignore \
-  dist.tmp/build.sh dist.tmp/deploy.sh dist.tmp/todo.md
+git archive HEAD:site | tar -x -C dist.tmp
 
 (
   cd dist.tmp

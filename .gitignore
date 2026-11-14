@@ -1,5 +1,11 @@
-.playwright-cli/
-.vscode/
-dist/
-dist.tmp/
-dist.old/
+# Build output (build.sh)
+/dist/
+/dist.tmp/
+/dist.old/
+
+# Editor settings
+/.vscode/
+
+# Tool output
+/.claude/reviews/
+/.playwright-cli/
