@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cours d'informatique - DYL</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="data:,">
-</head>
-<body>
-<main>
-  <h1>Cours d'informatique - DYL</h1>
+---
+title: Cours d'informatique - DYL
+---
+{% extends "layouts/base.njk" %}
+{% block main %}
+  <h1>{{ title }}</h1>
 
   <div class="tabs" role="tablist" aria-label="Sections du site">
     <button type="button" role="tab" id="tab-exercises" aria-controls="exercises">Exercices</button>
@@ -19,59 +13,31 @@
 
   <section class="tab-panel" role="tabpanel" id="resources" aria-labelledby="tab-resources">
     <ul class="exercise-list">
+{%- for resource in resources %}
       <li>
-        <a class="exercise-link" href="https://flashcards.dhoedt.com/profile/aa4c0967-8cab-4beb-aa81-0ec0cb699f19" target="_blank" rel="noopener">
-          <span class="exercise-title">Flashcards</span>
-          <span class="link-host">flashcards.dhoedt.com</span>
+        <a class="exercise-link" href="{{ resource.url }}" target="_blank" rel="noopener">
+          <span class="exercise-title">{{ resource.title }}</span>
+          <span class="link-host">{{ resource.host }}</span>
         </a>
       </li>
-      <li>
-        <a class="exercise-link" href="https://jurys.cfwb.be/jurys-secondaires/obtenir-mon-diplome/certificat-denseignement-secondaire-superieur-cess/cess-professionnel-p/" target="_blank" rel="noopener">
-          <span class="exercise-title">CESS professionnel — site de la FWB</span>
-          <span class="link-host">jurys.cfwb.be</span>
-        </a>
-      </li>
+{%- endfor %}
     </ul>
   </section>
 
   <section class="tab-panel" role="tabpanel" id="lessons" aria-labelledby="tab-lessons">
-    <ul class="exercise-list">
-      <li>
-        <a class="exercise-link" href="lessons/subnet.html">
-          <span class="exercise-title">Le masque de sous-réseau</span>
-        </a>
-      </li>
-      <li>
-        <a class="exercise-link" href="lessons/os-install.html">
-          <span class="exercise-title">Installer un système d'exploitation</span>
-        </a>
-      </li>
-    </ul>
+{%- set pages = collections.lessons %}
+{% include "partials/page-list.njk" %}
   </section>
 
   <section class="tab-panel" role="tabpanel" id="exercises" aria-labelledby="tab-exercises">
-    <ul class="exercise-list">
-      <li>
-        <a class="exercise-link" href="exercises/subnet.html">
-          <span class="exercise-title">Le masque de sous-réseau</span>
-        </a>
-      </li>
-      <li>
-        <a class="exercise-link" href="exercises/osi.html">
-          <span class="exercise-title">Les couches du modèle OSI</span>
-        </a>
-      </li>
-      <li>
-        <a class="exercise-link" href="exercises/recovery.html">
-          <span class="exercise-title">Les options de récupération de Windows 11</span>
-        </a>
-      </li>
-    </ul>
+{%- set pages = collections.exercises %}
+{% include "partials/page-list.njk" %}
   </section>
-</main>
+{% endblock %}
 
+{% block after_main %}
 <footer class="site-footer">
-  <p><!-- build-time --></p>
+  <p>build: <time datetime="{{ build.datetime }}">{{ build.label }}</time> · {{ build.commit }}</p>
 </footer>
 
 <script>
@@ -109,5 +75,4 @@
 
   selectTab(panelIdFromHash());
 </script>
-</body>
-</html>
+{% endblock %}

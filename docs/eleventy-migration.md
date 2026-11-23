@@ -23,7 +23,7 @@ Step 1 also moves the server to release folders; see [Releases](#releases).
 
 These follow the working 11ty setup in another project of the same owner (ecoreno-max).
 
-1. **Folders inside `site/`.** Layouts and partials go to `site/_includes/`, data to `site/_data/`. This is the layout the 11ty docs describe, and 11ty does not publish either folder. D5 is reworded to "everything in `site/` is published, except `_`-prefixed folders and 11ty data files".
+1. **Folders inside `site/`.** Layouts and partials go to `site/_includes/`, data to `site/_data/`. This is the layout the 11ty docs describe, and 11ty does not publish either folder. D5 is reworded to "everything in `site/` is published, except top-level `_`-prefixed folders and 11ty data files".
 2. **Permalink.** By default, 11ty writes `lessons/subnet.html` to `lessons/subnet/index.html`, which breaks the relative links. `index.html` is not affected, since 11ty already writes it to `index.html`.
    - Each page folder gets a directory data file named after it: `site/lessons/lessons.11tydata.js` and `site/exercises/exercises.11tydata.js`. This is the pattern the 11ty docs describe, and ecoreno-max uses it (`pages/pages.11tydata.js`).
    - Both files import one shared function from `config/permalink.js`, `(data) => data.page.filePathStem + ".html"`, so the rule is written once.
@@ -35,7 +35,7 @@ These follow the working 11ty setup in another project of the same owner (ecoren
 
 ### Pages
 
-11ty passes plain `.html` files without front matter through Liquid unchanged. No page in `site/` contains `{{`, `{%` or `{#`, so none is misread. In this step, the pages are not edited and still open from disk.
+The config sets `htmlTemplateEngine: "njk"`, so `.html` pages are read by Nunjucks from step 1 on, the language step 2 uses. Plain `.html` files without front matter pass through it unchanged. No page in `site/` contains `{{`, `{%` or `{#`, so none is misread. In this step, the pages are not edited and still open from disk.
 
 ### Folders and files
 
@@ -81,7 +81,7 @@ Build the site with the current `build.sh` and with the new one, then compare th
 - **Template language.** The pages move to Nunjucks, the same language as ecoreno-max.
   - They are renamed from `.html` to `.njk`, and the config sets `templateFormats: ["njk"]`.
   - URLs keep `.html`, through the permalink function.
-  - In step 1, the pages stay `.html` and are read by Liquid, 11ty's default for HTML.
+  - In step 1, the pages stay `.html` and are already read by Nunjucks, through `htmlTemplateEngine: "njk"`. Step 2 removes that setting once no `.html` page is left.
 - **Layouts folder.** Layouts go to `site/_includes/layouts/`, and partials such as the back link to `site/_includes/partials/`.
 - **Icon shortcode.** The exercise icons (restart, hint, answer) are copied into every page today: 5 to 6 static inline SVGs per exercise (`recovery.html` 5, `osi.html` 5, `subnet.html` 6).
   - Each icon becomes one SVG file in `site/_includes/icons/`.
@@ -197,7 +197,7 @@ Docs:
 
 - **Opening from disk.** After step 2, source pages no longer open from disk. The built `dist/` should still open from disk, since paths stay relative and URLs keep `.html` (unconfirmed).
 - **Upkeep.** The Node version and the 11ty dependency need maintaining.
-- **Inline scripts.** Pages are read by a template engine: Liquid in step 1, Nunjucks from step 2. Each new inline script must avoid `{{`, `{%` and `{#`, or be wrapped in `{% raw %}`. JS template literals (`${…}`) are safe.
+- **Inline scripts.** Pages are read by Nunjucks. Each new inline script must avoid `{{`, `{%` and `{#`, or be wrapped in `{% raw %}`. JS template literals (`${…}`) are safe.
 - **New page folders.** A new folder of pages without its `.11tydata.js` file gets `<name>/index.html` URLs, which break its relative links. `CONTRIBUTING.md` (Pages) states the rule.
 
 ## Effort

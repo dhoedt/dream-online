@@ -10,14 +10,18 @@ CONTRIBUTING.md          this file
 AGENTS.md                what an AI agent needs on top of this file (CLAUDE.md imports it)
 LICENSE                  the licence of the repository (not published)
 site/                    the published site
-├── index.html           home page: tabs listing the exercises, lessons and resources
-├── lessons/             one HTML page per lesson
-├── exercises/           one HTML page per exercise
+├── index.njk            home page: tabs listing the exercises, lessons and resources
+├── lessons/             one page per lesson (.njk)
+├── exercises/           one page per exercise (.njk)
 ├── css/style.css        the only stylesheet, shared by every page
 ├── js/common.js         helpers shared by the exercises (panels, feedback, wrong fields)
-└── js/<topic>.js        logic shared by the lesson and the exercise of one topic (subnet.js)
-build.sh                 builds dist/ from site/ in the last commit
-deploy.sh                runs on the server: updates the clone and runs build.sh
+├── js/<topic>.js        logic shared by the lesson and the exercise of one topic (subnet.js)
+├── _includes/           layouts/, partials/ and icons/ (not published)
+└── _data/               resources.json, build time and commit, derived page data (not published)
+eleventy.config.js       11ty config: input, output, filters, shortcodes, collections, copied files
+config/                  the code behind the config: asset_url, icon, page kinds, root prefix
+package.json             Node version, 11ty dependency, npm scripts
+deploy.sh                runs on the server: updates the clone, builds a release, switches to it
 .github/workflows/       the deploy workflow
 docs/
 ├── architecture.md      pages, shared code, build and deploy
@@ -26,11 +30,15 @@ docs/
 ├── eleventy-migration.md the plan for the Eleventy migration
 └── ideas.md             ideas not evaluated yet
 dist/                    build output, out of git
+_site/                   output of npm start, out of git
+node_modules/            installed packages, out of git
 ```
 
-Everything in `site/` is published; only site files go there. Everything else stays in the repository.
+Everything in `site/` is published, except top-level `_`-prefixed folders (`_includes/`, `_data/`); only site files go there. Everything else stays in the repository.
 
-Site paths in the docs (`index.html`, `js/common.js`, `exercises/…`) are relative to `site/`.
+Asset files are published by extension. A new file type needs its extension added in `eleventy.config.js`.
+
+Site paths in the docs (`index.njk`, `js/common.js`, `exercises/…`) are relative to `site/`.
 
 A new file in `docs/` needs a line in the Map section of `README.md`.
 
@@ -54,14 +62,27 @@ When code and docs disagree, fix one of them; do not leave both.
 
 ### Adding a lesson or an exercise
 
-1. Copy an existing page of the same kind, so the head, back link and structure stay the same.
-2. Link it from the matching tab in `index.html`.
+1. Copy an existing page of the same kind, then set its front matter. The page appears in its home page tab with no other change.
+
+   ```yaml
+   ---
+   title: Le masque de sous-réseau
+   tags: lesson        # or exercise
+   order: 1            # position in its tab
+   ---
+   ```
+
+2. Keep `{% extends "layouts/base.njk" %}`, the `main` block (the `<h1>` and the content) and the `after_main` block (the scripts). The head, the `<title>` and the back link come from the layout.
 3. When a lesson and an exercise cover the same topic, put the shared logic in `js/<topic>.js` and link the lesson to its exercise.
+
+A title starting with a proper noun gets a wrong `<title>`, since its first letter is lowercased after "Leçon : " or "Exercice : ".
 
 ### Page conventions
 
-- `lang="fr"`, the viewport meta, `../css/style.css`, and the empty favicon (`<link rel="icon" href="data:,">`).
-- Reference CSS and JS with relative paths in double or single quotes. The cache busting in `build.sh` matches them that way.
+- Load CSS and JS through `asset_url`, with a path from the site root: `<script src="{{ 'js/common.js' | asset_url }}"></script>`. It adds the cache-busting version.
+- Link to another page with `rootPrefix` and the page's URL: `href="{{ rootPrefix }}exercises/subnet/"`.
+- Use `{% icon "name" %}` for an icon from `_includes/icons/`. A new icon is one SVG file there.
+- Pages are read as Nunjucks templates. Inline scripts must not contain `{{`, `{%` or `{#`, or must be wrapped in `{% raw %}`. JS template literals (`${…}`) are safe.
 - Exercise pages load `js/common.js` and use its hint/answer panels and feedback line.
 - Accessibility: icon buttons carry `title` and `aria-label`; tabs and panels use the matching ARIA roles.
 

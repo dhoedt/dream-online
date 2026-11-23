@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ pageTitle }}</title>
+<link rel="stylesheet" href="{{ 'css/style.css' | asset_url }}">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<main>
+{%- if backLink %}
+{% include "partials/back-link.njk" %}
+{%- endif %}
+{% block main %}{% endblock %}
+</main>
+{% block after_main %}{% endblock %}
+</body>
+</html>

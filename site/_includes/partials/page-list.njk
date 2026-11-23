@@ -1,0 +1,10 @@
+{#- The pages of one home page tab. Expects `pages`, a collection. #}
+    <ul class="exercise-list">
+{%- for listedPage in pages %}
+      <li>
+        <a class="exercise-link" href="{{ rootPrefix }}{{ listedPage.url.slice(1) }}">
+          <span class="exercise-title">{{ listedPage.data.title }}</span>
+        </a>
+      </li>
+{%- endfor %}
+    </ul>

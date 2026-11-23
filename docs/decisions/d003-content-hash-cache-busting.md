@@ -2,10 +2,10 @@
 
 Taken on 2026-11-14 (recorded after the fact).
 
-At build time, every CSS/JS reference in the HTML pages gets `?v=<first 8 characters of the file's git hash>`. The source files keep plain references.
+Pages reference CSS and JS through the `asset_url` filter. At build time, it appends `?v=<first 10 hex characters of the file's SHA-256>` to the path.
 
-**Why:** browsers then fetch a CSS or JS file again only when its content changed. The sources stay clean, and opening them locally still works.
+**Why:** browsers then fetch a CSS or JS file again only when its content changed. The filter also fails the build when a referenced file is missing.
 
-**Accepted risks:** the replacement matches references in quotes by regular expression. A reference written another way (built in JavaScript, for example) is not versioned.
+**Accepted risks:** a reference that does not go through the filter (one built in JavaScript, for example) is not versioned.
 
-**Applied in:** `build.sh`, `CONTRIBUTING.md` (Page conventions).
+**Applied in:** `config/asset-url.js`, `eleventy.config.js`, `site/_includes/layouts/base.njk`, every page that loads a script, `CONTRIBUTING.md` (Page conventions).

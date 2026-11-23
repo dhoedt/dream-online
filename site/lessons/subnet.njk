@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leçon : le masque de sous-réseau</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="icon" href="data:,">
-</head>
-<body>
-<main>
-  <a class="back-link" href="../index.html#lessons">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M19 12H5"/>
-      <path d="m12 19-7-7 7-7"/>
-    </svg>
-    Leçons
-  </a>
+---
+title: Le masque de sous-réseau
+tags: lesson
+order: 1
+---
+{% extends "layouts/base.njk" %}
+{% block main %}
   <header class="page-header">
     <p class="eyebrow">Leçon</p>
     <h1>Le masque de sous-réseau</h1>
@@ -44,11 +33,11 @@
     <div id="worked-example-steps"></div>
   </section>
 
-  <a class="exercise-link lesson-link" href="../exercises/subnet.html">
+  <a class="exercise-link lesson-link" href="{{ rootPrefix }}exercises/subnet/">
     <span class="exercise-title">Exercice&nbsp;: le masque de sous-réseau</span>  </a>
-</main>
-
-<script src="../js/subnet.js"></script>
+{% endblock %}
+{% block after_main %}
+<script src="{{ 'js/subnet.js' | asset_url }}"></script>
 <script>
   const WORKED_EXAMPLE = { octets: [172, 16, 45, 130], prefix: 22 };
 
@@ -75,5 +64,4 @@
 
   renderWorkedExample();
 </script>
-</body>
-</html>
+{% endblock %}

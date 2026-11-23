@@ -12,7 +12,7 @@ Working notes for AI coding agents. The rules for people and agents are in `CONT
 | Task | Read first |
 |---|---|
 | Add or change a lesson or an exercise | `CONTRIBUTING.md` (Pages), then an existing page of the same kind |
-| Change shared behaviour or style | `docs/architecture.md` (Shared code), then `js/common.js` or `css/style.css` |
+| Change shared behaviour or style | `docs/architecture.md` (Shared code), then `js/common.js`, `css/style.css` or `_includes/` |
 | Change the build or the deploy | `docs/architecture.md` (Build, Deploy), then D2 and D3 |
 | Make a choice | `docs/decisions/README.md`, then add one file (next free ID) |
 | Pick up planned work | `docs/roadmap.md` |
@@ -22,10 +22,11 @@ Working notes for AI coding agents. The rules for people and agents are in `CONT
 The commands are in `README.md`. On top of them:
 
 - Ask before running the build or any other verification.
-- Never run `deploy.sh`. It resets the clone it runs in to `origin/main`, which discards local changes.
+- Never run `deploy.sh`. It resets the clone it runs in to `origin/main`, which discards local changes, and switches the `current` symlink in the folder above the clone.
+- `npm install` changes `package-lock.json`; ask before adding or upgrading a package.
 
 ## Hard limits
 
 - Content is checked for factual accuracy: lessons are teaching material. Mark anything unverified and ask.
-- Everything in `site/` is published; only site files go there.
+- Everything in `site/` is published, except top-level `_`-prefixed folders; only site files go there.
 - No git unless the user asks. That includes read-only use: no `git log`, `show`, `diff`, `blame` or `status` to gather information.

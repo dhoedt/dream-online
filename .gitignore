@@ -1,7 +1,9 @@
-# Build output (build.sh)
+# Build output (build.sh, npm start)
 /dist/
-/dist.tmp/
-/dist.old/
+/_site/
+
+# Installed packages
+/node_modules/
 
 # Editor settings
 /.vscode/

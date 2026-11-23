@@ -1,29 +1,15 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Exercice : le masque de sous-réseau</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="icon" href="data:,">
-</head>
-<body>
-<main>
-  <a class="back-link" href="../index.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M3 10.5 12 3l9 7.5"/>
-      <path d="M5 9.5V20a1 1 0 0 0 1 1h3.5v-6h5v6H18a1 1 0 0 0 1-1V9.5"/>
-    </svg>
-    Accueil
-  </a>
+---
+title: Le masque de sous-réseau
+tags: exercise
+order: 1
+---
+{% extends "layouts/base.njk" %}
+{% block main %}
 
-  <a class="exercise-link lesson-link lesson-reminder" href="../lessons/subnet.html">
+  <a class="exercise-link lesson-link lesson-reminder" href="{{ rootPrefix }}lessons/subnet/">
     <span class="reminder-label">À lire avant de commencer</span>
     <span class="exercise-title">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/>
-        <path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>
-      </svg>
+      {% icon "book" %}
       Leçon&nbsp;: le masque de sous-réseau
     </span>
     <span class="reminder-text">Une leçon couvre ce sujet, avec un exemple résolu pas à pas. Prenez le temps de la lire avant de vous lancer dans l'exercice.</span>
@@ -51,25 +37,14 @@
       </div>
       <div class="statement-actions">
         <button type="button" class="icon-button" id="new-exercise" title="Générer un exercice" aria-label="Générer un exercice">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-            <path d="M3 3v5h5"/>
-          </svg>
+          {% icon "restart" %}
         </button>
         <button type="button" class="icon-button" id="edit-exercise" form="custom-form" title="Exercice sur mesure" aria-label="Exercice sur mesure">
-          <svg data-icon="edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>
-          </svg>
-          <svg data-icon="confirm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
-            <path d="M20 6 9 17l-5-5"/>
-          </svg>
+          {% icon "edit", 'data-icon="edit"' %}
+          {% icon "check", 'data-icon="confirm" hidden' %}
         </button>
         <button type="button" class="icon-button is-cancel" id="cancel-edit" title="Annuler" aria-label="Annuler" hidden>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M18 6 6 18"/>
-            <path d="m6 6 12 12"/>
-          </svg>
+          {% icon "close" %}
         </button>
       </div>
     </div>
@@ -78,10 +53,10 @@
   </div>
 
   <div id="questions"></div>
-</main>
-
-<script src="../js/common.js"></script>
-<script src="../js/subnet.js"></script>
+{% endblock %}
+{% block after_main %}
+<script src="{{ 'js/common.js' | asset_url }}"></script>
+<script src="{{ 'js/subnet.js' | asset_url }}"></script>
 <script>
   const MIN_PREFIX = 20;
   const MAX_PREFIX = 27;
@@ -387,5 +362,4 @@
 
   startFromUrl();
 </script>
-</body>
-</html>
+{% endblock %}
