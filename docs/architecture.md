@@ -16,7 +16,7 @@ How the site is built: pages, shared code, build and deploy.
 | `js/common.js` | exercises | hint/answer panels (one open at a time), feedback line, wrong-field marking |
 | `js/subnet.js` | subnet lesson and exercise | subnet calculations and their rendering |
 
-Scripts are plain `<script>` files, not modules, so pages work when opened from the file system.
+Scripts are plain `<script>` files, not modules, so pages work when opened from the file system (D6). This holds for the source pages and for the built site in `dist/`.
 
 ## Build
 

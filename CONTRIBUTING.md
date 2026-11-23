@@ -22,7 +22,8 @@ deploy.sh                runs on the server: updates the clone and runs build.sh
 docs/
 ├── architecture.md      pages, shared code, build and deploy
 ├── decisions/           one file per decision
-├── todo.md              planned work
+├── roadmap.md           planned work, in order
+├── eleventy-migration.md the plan for the Eleventy migration
 └── ideas.md             ideas not evaluated yet
 dist/                    build output, out of git
 ```
@@ -38,7 +39,7 @@ A new file in `docs/` needs a line in the Map section of `README.md`.
 | Level | Where | Meaning |
 |---|---|---|
 | Authoritative | `README.md`, `CONTRIBUTING.md`, `AGENTS.md`, `docs/architecture.md`, `docs/decisions/` | What is true now. Code follows these files. |
-| Supporting | `docs/todo.md`, `docs/ideas.md` | Plans and ideas. Never a source of truth. |
+| Supporting | `docs/roadmap.md`, `docs/eleventy-migration.md`, `docs/ideas.md` | Plans and ideas. Never a source of truth. |
 
 When code and docs disagree, fix one of them; do not leave both.
 
@@ -79,8 +80,8 @@ When code and docs disagree, fix one of them; do not leave both.
 ## Ideas and planned work
 
 - An idea not evaluated yet goes to `docs/ideas.md`, using the template below.
-- Once accepted, it becomes an item in `docs/todo.md` (with a decision if it is a real choice), and is removed from `ideas.md`.
-- Once done, remove the item from `docs/todo.md`.
+- Once accepted, it becomes an item in `docs/roadmap.md` (with a decision if it is a real choice), and is removed from `ideas.md`.
+- Once done, remove the item from `docs/roadmap.md`.
 
 ## Writing style
 

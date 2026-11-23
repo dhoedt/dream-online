@@ -5,7 +5,7 @@ Working notes for AI coding agents. The rules for people and agents are in `CONT
 ## Before you start
 
 - Read `CONTRIBUTING.md` before changing any page or doc, or adding any file.
-- `docs/architecture.md` and `docs/decisions/` are the source of truth. `docs/todo.md` and `docs/ideas.md` are plans, never the spec.
+- `docs/architecture.md` and `docs/decisions/` are the source of truth. `docs/roadmap.md`, `docs/ideas.md` and `docs/eleventy-migration.md` are plans, never the spec.
 
 ## Where to start
 
@@ -15,7 +15,7 @@ Working notes for AI coding agents. The rules for people and agents are in `CONT
 | Change shared behaviour or style | `docs/architecture.md` (Shared code), then `js/common.js` or `css/style.css` |
 | Change the build or the deploy | `docs/architecture.md` (Build, Deploy), then D2 and D3 |
 | Make a choice | `docs/decisions/README.md`, then add one file (next free ID) |
-| Pick up planned work | `docs/todo.md` |
+| Pick up planned work | `docs/roadmap.md` |
 
 ## Commands
 

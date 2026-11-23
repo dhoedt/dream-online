@@ -3,11 +3,11 @@
 A static website with computer-science lessons and interactive exercises for students, in French.
 Topics so far: subnet masks, the OSI model, installing an operating system, Windows 11 recovery options.
 
-There is no framework, no package manager and no server-side code: plain HTML, CSS and JavaScript.
+The site is static: plain HTML, CSS and JavaScript, with no framework and no server-side code. The build may use tools with a package manager (D6); none is in use yet.
 
 ## Run
 
-Open `site/index.html` in a browser. Every page works straight from the file system.
+Open `site/index.html` in a browser. Every page works straight from the file system as long as no page is generated at build time.
 
 ## Build
 
@@ -33,5 +33,6 @@ The rules for each folder are in `CONTRIBUTING.md`.
   - [css/](site/css/), [js/](site/js/): shared style and scripts.
 - [docs/architecture.md](docs/architecture.md): pages, shared code, build and deploy.
 - [docs/decisions/](docs/decisions/README.md): what was chosen and why.
-- [docs/todo.md](docs/todo.md): planned work.
+- [docs/roadmap.md](docs/roadmap.md): planned work, in order.
 - [docs/ideas.md](docs/ideas.md): ideas not evaluated yet.
+- [docs/eleventy-migration.md](docs/eleventy-migration.md): the plan for moving the site to Eleventy.
