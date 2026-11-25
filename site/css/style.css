@@ -10,6 +10,7 @@
   --success-soft: #e6f5ec;
   --danger: #c0362c;
   --danger-soft: #fdecea;
+  --warning: #b45309;
   --panel: #f0f4fa;
   --network-bits: #1f5fbf;
   --host-bits: #b45309;
@@ -30,6 +31,7 @@
     --success-soft: #16301f;
     --danger: #ff7b72;
     --danger-soft: #3a1c1a;
+    --warning: #f0a94b;
     --panel: #222a35;
     --network-bits: #6ea8ff;
     --host-bits: #f0a94b;
@@ -263,11 +265,16 @@ button.is-cancel:hover:not(:disabled) {
 }
 
 .info-box {
+  --box-color: var(--accent);
   margin: 0.75rem 0;
   padding: 0.75rem clamp(0.75rem, 3.5vw, 1rem);
-  border-left: 0.25rem solid var(--accent);
+  border-left: 0.25rem solid var(--box-color);
   border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  background: color-mix(in srgb, var(--box-color) 8%, var(--surface));
+}
+
+.info-box.warning {
+  --box-color: var(--warning);
 }
 
 .info-box p {
@@ -279,7 +286,7 @@ button.is-cancel:hover:not(:disabled) {
   align-items: center;
   gap: 0.5rem;
   margin-top: 0;
-  color: var(--accent);
+  color: var(--box-color);
   font-weight: 600;
 }
 

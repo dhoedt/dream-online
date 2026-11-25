@@ -11,6 +11,14 @@ permalink: "flashcards/"
   <h1>{{ title }}</h1>
   <p class="intro">Choisissez les cartes à réviser, puis commencez. Cherchez la réponse de tête, puis retournez la carte. Les cartes à revoir peuvent être reprises à la fin de la série.</p>
 
+  <aside class="info-box warning">
+    <p class="info-box-title">
+      {% icon "info" %}
+      Vieilles cartes qui doivent être revues et corrigées !
+    </p>
+    <p>Les flashcards vont bientôt être revues en profondeur. D'ici là, certaines réponses peuvent contenir des erreurs. En cas de doute, vérifiez dans le cours.</p>
+  </aside>
+
   <form class="question" id="settings" aria-label="Réglages">
 {%- for exam in flashcards.exams %}
     <fieldset class="filter-group">
