@@ -1,0 +1,128 @@
+Importance,Matiere,Front,Back,Extra
+2_HIGH,Hardware,BGA,Ball Grid Array,Moyen de fixation d'un circuit électronique (e.g. CPU) à une carte imprimée (PCB) par soudure.
+2_HIGH,Hardware,BIOS,Basic Input/Output System,"Ancien micrologiciel remplacé par l'UEFI. Il est utilisé pour effectuer l'initialisation du matériel pendant le processus de démarrage, avant que le système d'exploitation ne soit démarré."
+2_HIGH,Hardware,CPU,Central Processing Unit,Processeur principal d'un ordinateur.
+2_HIGH,Hardware,HDD,Hard Disk Drive,"Périphérique de stockage magnétique, utilisant des plateaux magnétiques rotatifs, il est nettement moins rapide qu'un SSD (Solid-State Drive)."
+2_HIGH,Hardware,LGA,Land Grid Array,Moyen de fixation d'un circuit électronique (e.g. CPU) à contacts plats sur un socket.
+2_HIGH,Hardware,PGA,Pin Grid Array,Moyen de fixation d'un circuit électronique (e.g. CPU) à broches (i.e. pins) sur un socket.
+2_HIGH,Hardware,RAM,Random Access Memory,"Mémoire volatile (i.e. non permanente) qui sert de mémoire de travail du CPU (processeur principal de l'ordinateur). La RAM contient les programmes en cours d'exécution (e.g. Photoshop, Windows, etc.) et leurs données."
+2_HIGH,Hardware,ROM,Read-Only Memory,Mémoire non-volatile (i.e. permanente) qui ne peut être que lue (ex: un CD-ROM).
+2_HIGH,Hardware,SSD,Solid-State Drive,Périphérique de stockage utilisant de la mémoire de type flash pour stocker les données. Le SSD offre des vitesses de lecture et d’écriture beaucoup plus rapides que celles d'un disque dur magnétique.
+2_HIGH,Hardware,USB,Universal Serial Bus,Standard de connexion permettant de relier des périphériques à un ordinateur pour le transfert de données et l’alimentation électrique.
+2_HIGH,Hardware,Ventirad,Ventilateur + Radiateur (Anglais: CPU cooler),Système de refroidissement à air pour processeurs. Notez qu'il existe également le watercooling.
+1_AVG,Hardware,AGP,Accelerated Graphics Port,Ancien port pour connecter les cartes graphiques qui visait à remplacer le port PCI mais qui fut finalement remplacé par le PCIe.
+1_AVG,Hardware,CD,Compact Disc,Support amovible de stockage optique.
+1_AVG,Hardware,DIMM,Dual Inline Memory Module,"Architecture moderne d'un module de RAM remplaçant le modèle SIMM. Contrairement à l'architecture SIMM (Single Inline Memory Module) où les deux côtés partageaient la même connexion, chaque face d’une barrette propose ici une connexion distincte, doublant ainsi les taux de transfert possibles."
+1_AVG,Hardware,DVD,Digital Versatile Disc,"Support amovible de stockage optique utilisé pour stocker de la vidéo ou des données diverses (e.g. jeux vidéo, fichiers d'installation de Windows, etc.)."
+1_AVG,Hardware,HDMI,High-Definition Multimedia Interface,Interface numérique propriétaire utilisée pour transmettre des signaux vidéo et audio de haute qualité entre différents appareils.
+1_AVG,Hardware,I/O (Français: E/S),Input/Output (Entrée/Sortie),Échange de données entre ordinateur et périphériques.
+1_AVG,Hardware,IRQ,Interrupt Request,Signal envoyé par un périphérique (e.g. clavier) à un processeur pour attirer son attention et demander le traitement d’une tâche immédiate (e.g. saisie d'un caractère).
+1_AVG,Hardware,POST,Power-On Self-Test,Test de diagnostic effectué par un ordinateur pour vérifier le matériel avant de démarrer le système d'exploitation.
+1_AVG,Hardware,PSU,Power Supply Unit,"Convertit le courant alternatif du secteur (e.g. 230V en Belgique) en courant continu de tensions modérées (e.g. 3.3V, 5V, 12V) pour faire fonctionner les composants internes d'un ordinateur."
+1_AVG,Hardware,RTC,Real-Time Clock,"Puce intégrée à un appareil qui maintient l’heure et la date même lorsque l’appareil est éteint, typiquement grâce à la pile CMOS."
+1_AVG,Hardware,SATA,Serial Advanced Technology Attachment,"Interface moderne de connexion pour disques durs et SSD, permettant le transfert rapide de données entre un périphérique de stockage et un ordinateur."
+1_AVG,Hardware,UEFI,Unified Extensible Firmware Interface,"UEFI est le successeur du BIOS, il prend en charge des disques durs plus volumineux, un démarrage plus rapide, une interface graphique moderne, un démarrage sécurisé pour une meilleure sécurité et une plus grande flexibilité pour la gestion du matériel et du système d'exploitation."
+1_AVG,Hardware,UPS,Uninterruptible Power Supply,Fournit une alimentation de secours sur batterie en cas de panne pour maintenir les systèmes en fonctionnement et éviter la perte de données.
+1_AVG,Hardware,ZIF,Zero Insertion Force,Type de connecteur qui permet d'insérer facilement des composants sans forcer.
+0_LOW,Hardware,BNC,Bayonet Neill-Concelman,Connecteur coaxial à connexion rapide couramment utilisé dans les réseaux vidéo et Ethernet plus anciens. Le câble à paires torsadées avec connecteurs RJ45 a remplacé le câble coaxial à connecteurs BNC.
+0_LOW,OS,MSR,Microsoft Reserved Partition,"Partition réservée que Windows ajoute à chaque disque GPT pour faciliter la gestion des partitions. Sur Windows 10 et 11, la MSR fait 16 Mo (128 Mo sous Windows 7/8). Elle n'a pas de lettre de lecteur et ne peut pas contenir de données utilisateur."
+1_AVG,Hardware,PnP,Plug and Play,"Le plug and play (PnP) permet à un système compatible de reconnaître automatiquement un périphérique compatible dès son branchement ; il devient directement utilisable, sans intervention manuelle de l'utilisateur."
+0_LOW,Hardware,SIMM,Single Inline Memory Module,"Architecture ancienne d'un module de RAM remplacée par le modèle DIMM. Pour une architecture SIMM (Single Inline Memory Module), les deux côtés d'une barrette de RAM partagent la même connexion. DIMM est une évolution de cette dernière où chaque face d’une barrette propose désormais une connexion distincte, doublant ainsi les taux de transfert possibles."
+2_HIGH,Réseau,ADSL,Asymmetric Digital Subscriber Line,Internet haut débit via ligne téléphonique. Asymétrique car la vitesse de téléchargement descendant (download) n'est pas la même (généralement plus haute) que celle pour le téléchargement ascendant (upload).
+2_HIGH,Réseau,DHCP,Dynamic Host Configuration Protocol,Protocole réseau qui attribue automatiquement une adresse IP et des paramètres aux appareils qui se connectent au réseau.
+2_HIGH,Réseau,DNS,Domain Name System,Traduit les noms de domaine en adresses IP.
+2_HIGH,Réseau,FAI,Fournisseur d’Accès à Internet,"Proximus, Orange, Telenet, VOO, Scarlet, etc."
+2_HIGH,Réseau,LAN,Local Area Network,"Un LAN est un réseau informatique qui relie les ordinateurs et les appareils au sein d'une zone géographique restreinte, telle qu'une maison, un bureau."
+2_HIGH,Réseau,WAN,Wide Area Network,"Un WAN relie des réseaux plus petits, tels que les réseaux locaux (LAN), sur de vastes zones géographiques, comme des villes ou des pays. Internet est un WAN."
+1_AVG,Réseau,ARP,Address Resolution Protocol,Protocole qui associe les adresses IP aux adresses MAC.
+1_AVG,Réseau,DMZ,Demilitarized Zone,La DMZ (zone démilitarisée) est exposée à l'Internet public afin d'héberger des services externes tout en protégeant le réseau interne.
+1_AVG,Réseau,F/FTP,"paires torsadées blindées par feuille métallique, dans un câble blindé par feuille métallique","La partie avant le slash `/` indique le blindage global du câble :<br>(U = non blindé, F = feuille, S = tresse, SF = tresse + feuille)<br>La partie après indique le blindage individuel des paires :<br>(UTP = paires non blindées, FTP = paires blindées par feuille)"
+1_AVG,Réseau,F/UTP,"paires torsadées non blindées, dans un câble blindé par feuille métallique","La partie avant le slash `/` indique le blindage global du câble :<br>(U = non blindé, F = feuille, S = tresse, SF = tresse + feuille)<br>La partie après indique le blindage individuel des paires :<br>(UTP = paires non blindées, FTP = paires blindées par feuille)"
+1_AVG,Réseau,FTP,File Transfer Protocol,Protocole réseau utilisé pour transférer des fichiers entre un ordinateur local et un serveur sur Internet ou un réseau.
+1_AVG,Réseau,HTML,Hypertext Markup Language,Langage de balisage standard pour les documents destinés à être affichés dans un navigateur Web. Il définit le contenu d'une page web et sa structure. Il est souvent associé à des technologies telles que les feuilles de style en cascade (CSS : Cascading Style Sheets) et les langages de script tels que JavaScript
+1_AVG,Réseau,HTTP,Hypertext Transfer Protocol,"Protocole utilisé pour transférer des documents HTML (pages Web), images et autres ressources, dans un mode requête-réponse client-serveur."
+1_AVG,Réseau,HTTPS,Hypertext Transfer Protocol Secure,"Extension du protocole HTTP, il permet de sécuriser les communications sur un réseau informatique et est largement utilisé sur Internet. HTTPS chiffre les communications à l'aide du protocole TLS (Transport Layer Security) ou, auparavant, SSL (Secure Sockets Layer)."
+1_AVG,Réseau,IGP,Interior Gateway Protocol,"Protocole de routage qui fonctionne au sein d'un seul réseau, plus précisément d'un système autonome (AS), afin d'échanger des informations de routage entre les passerelles (routeurs)."
+1_AVG,Réseau,IMAP,Internet Message Access Protocol,"Le protocole IMAP permet la gestion complète d'une boîte mail par un client de messagerie (e.g. application mobile, Outlook sur Windows) via une connexion TCP/IP."
+1_AVG,Réseau,IP,Internet Protocol,"Élément de la ""Internet Protocol Suite"", ce protocole décrit les paquets IP (v4 ou v6) et la manière de les livrer d'une source à une destination."
+1_AVG,Réseau,MAC,Media Access Control,"Sous-couche de la couche liaison de données (couche 2) qui contrôle l'accès au support (e.g. Ethernet, Wi-Fi). Elle utilise l'adresse MAC, attribuée à chaque interface réseau par le fabricant, normalement unique mais modifiable."
+1_AVG,Réseau,NAS,Network-Attached Storage,"Dispositif de stockage connecté à un réseau, permettant à plusieurs utilisateurs et appareils d’accéder et de partager des fichiers."
+1_AVG,Réseau,NAT,Network Address Translation,"Mécanisme qui permet de traduire les adresses IP internes d’un réseau privé en adresses IP publiques, et vice versa, pour permettre la communication avec Internet tout en masquant le réseau interne."
+1_AVG,Réseau,OSI,Open Systems Interconnection,"Un modèle de référence décrivant les différentes couches utilisées lors de l'échange d'information entre deux appareils sur un réseau. C'est un modèle théorique, rarement utilisé tel quel ; en pratique, c'est la suite TCP/IP qui s'est imposée."
+1_AVG,Réseau,PPP,Point-to-Point Protocol,Le protocole PPP (Point-to-Point Protocol) fournit une méthode standard pour transporter des datagrammes multiprotocoles sur des liaisons point à point.
+1_AVG,Réseau,S/FTP,"paires torsadées blindées par feuille métallique, dans un câble blindé par tresse métallique","La partie avant le slash `/` indique le blindage global du câble :<br>(U = non blindé, F = feuille, S = tresse, SF = tresse + feuille)<br>La partie après indique le blindage individuel des paires :<br>(UTP = paires non blindées, FTP = paires blindées par feuille)"
+1_AVG,Réseau,S/UTP,"paires torsadées non blindées, dans un câble blindé par une tresse métallique","La partie avant le slash `/` indique le blindage global du câble :<br>(U = non blindé, F = feuille, S = tresse, SF = tresse + feuille)<br>La partie après indique le blindage individuel des paires :<br>(UTP = paires non blindées, FTP = paires blindées par feuille)"
+1_AVG,Réseau,SMTP,Simple Mail Transfer Protocol,Protocole utilisé pour envoyer et relayer des courriers électroniques entre serveurs de messagerie sur un réseau.
+1_AVG,Réseau,TCP,Transmission Control Protocol,Garantit une transmission fiable et ordonnée des données entre les différents hôtes d'un réseau.
+1_AVG,Réseau,U/FTP,"paires torsadées blindées par feuille métallique, dans un câble non blindé","La partie avant le slash `/` indique le blindage global du câble :<br>(U = non blindé, F = feuille, S = tresse, SF = tresse + feuille)<br>La partie après indique le blindage individuel des paires :<br>(UTP = paires non blindées, FTP = paires blindées par feuille)"
+1_AVG,Réseau,U/UTP,"paires torsadées non blindées, dans un câble non blindé","Câble réseau avec paires torsadées, sans aucun blindage. Seule la torsade des paires protège contre les interférences électromagnétiques."
+1_AVG,Réseau,VPN,Virtual Private Network,Un réseau privé virtuel (VPN) est une architecture réseau permettant d'étendre virtuellement un réseau privé (e.g. le réseau d'une entreprise) à travers un réseau non fiable (e.g. le Wi-Fi public d'un aéroport).
+1_AVG,Réseau,Wi-Fi,Marque de la Wi-Fi Alliance (pas un acronyme),"« Wireless Fidelity » est une invention marketing a posteriori, que la Wi-Fi Alliance n'utilise pas. Technologie de réseau local sans fil (WLAN) qui connecte des appareils à un réseau local (cf. norme IEEE 802.11)."
+1_AVG,Réseau,WPA,Wi-Fi Protected Access,"Protocole de sécurité pour les réseaux sans fil, conçu pour protéger les communications en chiffrant les données et en contrôlant l’accès au réseau."
+1_AVG,Réseau,WWW,World Wide Web,"Le World Wide Web (ou simplement le Web) est un système d'information qui facilite le partage de contenu sur Internet. Il permet d'accéder à des documents et autres ressources Web via un navigateur (e.g. Chrome, Firefox) sur Internet grâce au protocole HTTP (Hypertext Transfer Protocol)."
+0_LOW,Réseau,ATM,Asynchronous Transfer Mode,"Ancien protocole de transmission de données à haute vitesse, en compétition avec Ethernet avant que ce dernier ne devienne plus rapide (1Gb/s)."
+0_LOW,Réseau,SF/FTP,"paires torsadées blindées par feuille métallique, dans un câble blindé par tresse et feuille métalliques","La partie avant le slash `/` indique le blindage global du câble :<br>(U = non blindé, F = feuille, S = tresse, SF = tresse + feuille)<br>La partie après indique le blindage individuel des paires :<br>(UTP = paires non blindées, FTP = paires blindées par feuille)"
+0_LOW,Réseau,SF/UTP,"paires torsadées non blindées, dans un câble blindé par tresse et feuille métalliques","La partie avant le slash `/` indique le blindage global du câble :<br>(U = non blindé, F = feuille, S = tresse, SF = tresse + feuille)<br>La partie après indique le blindage individuel des paires :<br>(UTP = paires non blindées, FTP = paires blindées par feuille)"
+2_HIGH,Shortcuts,Alt + F4,Fermer la fenêtre active,"Ferme la fenêtre active. Ferme, non pas l'onglet, mais tout le navigateur, par exemple."
+2_HIGH,Shortcuts,Ctrl + A,Sélectionner tout,Sélectionne l'entièreté du texte ou des éléments situés à l'endroit visé par le curseur.
+2_HIGH,Shortcuts,Ctrl + Alt + Suppr,Menu Sécurité Windows,"Ouvre le menu Sécurité Windows, qui permet de verrouiller l'ordinateur, de passer à un autre utilisateur, de vous déconnecter, de démarrer le Gestionnaire des tâches ou d'éteindre/redémarrer l'ordinateur."
+2_HIGH,Shortcuts,Ctrl + Maj + Echap,Gestionnaire de tâches,Ouvre directement le Gestionnaire de tâches plutôt que de passer par un menu intermédiaire avec le raccourci Ctrl + Alt + Suppr.
+2_HIGH,Shortcuts,Ctrl + C,Copier,Copie l'élément ou le texte sélectionné dans le presse-papiers.
+2_HIGH,Shortcuts,Ctrl + F4,Fermer l'onglet actif,"Ferme l'onglet actif d'un navigateur, par exemple."
+2_HIGH,Shortcuts,Ctrl + V,Coller,Colle le contenu du presse-papiers à l'emplacement sélectionné.
+2_HIGH,Shortcuts,Ctrl + X,Couper,Supprime l'élément ou le texte sélectionné et le stocke dans le presse-papiers.
+2_HIGH,Shortcuts,Ctrl + Y,Refaire,Réapplique la dernière action annulée.
+2_HIGH,Shortcuts,Ctrl + Z,Défaire / Annuler,Annule la dernière action effectuée.
+2_HIGH,Shortcuts,F1,Ouvrir le menu d'aide,"Dans une application, le raccourci ouvre habituellement le menu d'aide de l'application. Sinon, ouvre l'aide Microsoft."
+2_HIGH,Shortcuts,PrtSc / Imp. écr.,Capturer l'écran,"Windows 10 : copie tout l'écran dans le presse-papiers, sans enregistrer de fichier. Windows 11 : ouvre l'Outil Capture par défaut (l'ancien comportement reste disponible dans les paramètres)."
+2_HIGH,Shortcuts,Win,Ouvrir ou fermer le menu Démarrer,
+2_HIGH,Shortcuts,Win + E,Ouvrir l'Explorateur de fichiers,Ouvre l'Explorateur de fichiers pour naviguer dans l'arborescence dossiers et fichiers de l'ordinateur et de ses périphériques de stockage.
+2_HIGH,Shortcuts,Win + L,Verrouiller la session (Lock),Verrouille l'écran et sécurise la session.
+2_HIGH,Shortcuts,Win + R,Ouvrir l'exécuteur (Run),"Le menu exécuteur permet de lancer un programme à partir de son nom d'exécutable. Par exemple, pour ouvrir la calculatrice on donne ""calc.exe"" ou juste ""calc""."
+1_AVG,Shortcuts,Win + '+',Démarrer la loupe,Win + '+' ou '-' pour zoomer et dézoomer. Win + Echap pour quitter.
+1_AVG,Shortcuts,Win + D,Afficher le Bureau (Desktop),"Appuyer une fois pour afficher le bureau, une deuxième fois pour réafficher les fenêtres qui ont été réduites."
+1_AVG,Shortcuts,Win + I,Paramètres,Ouvre le panneau Paramètres Windows.
+1_AVG,Shortcuts,Win + Maj + S,Outil de capture d'écran (Screen),Lance l'outil de capture d'écran pour prendre une capture d'écran d'une zone sélectionnée.
+1_AVG,Shortcuts,Win + P,Option de projection (Project),Ouvre les options de projection d'affichage telles que l'extension ou la duplication.
+1_AVG,Shortcuts,Win + Pause,Afficher les informations système,"Sur Windows 10 (depuis 20H2) et 11, ouvre la page « Informations » des Paramètres (Système). Sur les versions plus anciennes, ouvrait la fenêtre Propriétés système."
+1_AVG,Shortcuts,Win + Tab,Ouvrir le système de gestion de fenêtres,"Système ""Vue des tâches"" (Task View) pour Windows 10 et 11 (""Flip 3D"", une fonction d'Aero, pour Windows Vista et 7 ; sélecteur d'applications pour Windows 8)"
+1_AVG,Shortcuts,Win + X,Ouvrir le Menu des liens rapides,"Donne un accès rapide au : Gestionnaire de tâches, Gestionnaire de périphériques, Gestion des disques, etc."
+0_LOW,Shortcuts,Win + ←,Déplacer la fenêtre active sur la gauche de l'écran,
+0_LOW,Shortcuts,Win + →,Déplacer la fenêtre active sur la droite de l'écran,
+0_LOW,Shortcuts,Win + ↑,Agrandir la fenêtre active,
+0_LOW,Shortcuts,Win + ↓,Réduire la fenêtre active,
+0_LOW,Shortcuts,Win + Ctrl + F,Rechercher les ordinateurs du réseau,Il faut avoir accès aux services de domaine Active Directory.
+0_LOW,Shortcuts,Win + Ctrl + Nombre,Basculer vers la dernière fenêtre active du programme de la barre des tâches,
+0_LOW,Shortcuts,Win + Ctrl + Q,Assistance rapide,"Ouvre l'Assistance rapide (Quick Assist), pour aider ou être aidé à distance. Ne pas confondre avec Win + Ctrl + F4, qui ferme le bureau virtuel actif."
+0_LOW,Shortcuts,Win + Début (ou Home),Réduire toutes les fenêtres sauf celle active,Appuyer à nouveau pour les réafficher.
+0_LOW,Shortcuts,Win + M,Réduire toutes les fenêtres (Minimize),Win + Maj + M pour réafficher les fenêtres réduites.
+0_LOW,Shortcuts,Win + Maj + ←,Déplacer la fenêtre active sur l'écran de gauche,
+0_LOW,Shortcuts,Win + Maj + →,Déplacer la fenêtre active sur l'écran de droite,
+0_LOW,Shortcuts,Win + Maj + ↑,Étirer la fenêtre active sur le haut et le bas de l'écran,
+0_LOW,Shortcuts,Win + Maj + Nombre,Démarrer une nouvelle instance d'un programme de la barre des tâches,
+0_LOW,Shortcuts,Win + Nombre,Démarrer un programme de la barre des tâches,"S'il est déjà en cours d'exécution, basculer vers ce programme."
+0_LOW,Shortcuts,Win + T,Sélectionner les programmes de la barre des tâches,"Tout en maintenant les autres touches, appuyer sur 'T' permet de sélectionner l'application suivante etc."
+0_LOW,Shortcuts,Win + U,Ouvrir les paramètres d'accessibilité,Appelés « options d'ergonomie » sur les anciennes versions de Windows.
+2_HIGH,Hardware,Bit,Binary Digit,"Plus petite unité de donnée numérique. Ses possibles valeurs sont 0 ou 1, à savoir les valeurs d'un nombre binaire."
+1_AVG,OS,BMP,Bitmap,"Format d’image matricielle, généralement non compressé (le format permet toutefois une compression RLE)."
+1_AVG,OS,BSOD,Blue Screen of Death,Écran d'erreur système critique affiché lorsque Windows rencontre une erreur fatale. Causes possibles : par exemple un défaut matériel ou un pilote défectueux.
+1_AVG,OS,CLI,Command Line Interface,"Interface textuelle pour les utilisateurs, interaction via le clavier uniquement. Pratique pour créer des scripts voire laisser les programmes interagir entre eux."
+1_AVG,OS,DOS,Disk Operating System,"Ancien système d’exploitation en ligne de commande. Cf. MS-DOS, IBM PC DOS, Apple DOS."
+1_AVG,OS,FAT,File Allocation Table,"Système de fichiers, anciennement utilisé sur Windows qui utilise maintenant NTFS. FAT32 reste tout à fait valable pour les plus petits systèmes qui n'ont pas besoin de fichiers plus grands que 4GB, les clés USB par exemple."
+1_AVG,OS,GPT,GUID Partition Table,"Système moderne de partitionnement qui remplace le MBR (Master Boot Record). La table de partition GUID (GPT) prend en charge les disques de grande capacité (supérieurs à 2 To), de nombreuses partitions, utilise des identifiants uniques (GUID) et stocke des tables de partition redondantes avec protection CRC pour plus de fiabilité."
+1_AVG,OS,GUI,Graphical User Interface,"Interface visuelle pour les utilisateurs (e.g. fenêtres, curseur de la souris)."
+1_AVG,OS,MBR,Master Boot Record,Remplacé par GPT (GUID Partition Table). Il contient la table des partitions du disque dur et une routine d'amorçage pour charger le système d'exploitation (ou le chargeur d'amorçage (boot loader) s'il existe).
+1_AVG,OS,NTFS,New Technology File System,Système de fichiers moderne de Windows ; il remplace le système FAT.
+1_AVG,OS,OCR,Optical Character Recognition,Technologie qui permet de convertir des textes imprimés ou manuscrits en données numériques exploitables par un ordinateur.
+0_LOW,OS,ANSI,American National Standards Institute,"Organisation privée à but non lucratif qui supervise l'élaboration de standards pour les produits, les services, les processus, les systèmes et le personnel aux États-Unis. L'organisation coordonne également les normes américaines avec les normes internationales afin que les produits américains puissent être utilisés dans le monde entier."
+0_LOW,OS,API,Application Programming Interface,"Contrairement à une interface utilisateur, qui relie un ordinateur à une personne, une interface de programmation d'application relie des ordinateurs ou des logiciels entre eux."
+0_LOW,OS,ASCII,American Standard Code for Information Interchange,"Standard d'encodage de caractères lisibles (a, b, c, A, B, C, 0, 1, etc.) et de caractères de contrôle non imprimables (e.g. retour à la ligne, tabulation, etc.). Assez restreint, il ne permet pas l'encodage de caractères accentués comme ceux du français. Il faudra alors se tourner vers le standard Unicode (e.g. UTF-8)."
+0_LOW,OS,PDF,Portable Document Format,"Format de fichier conçu pour présenter des documents de manière indépendante du logiciel, du matériel ou du système d’exploitation, en conservant la mise en page originale."
+1_AVG,,,,
+1_AVG,,,,
+1_AVG,,,,
+1_AVG,,,,
+1_AVG,,,,
+1_AVG,,,,
+1_AVG,,,,
+1_AVG,,,,

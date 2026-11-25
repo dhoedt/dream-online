@@ -10,16 +10,18 @@ CONTRIBUTING.md          this file
 AGENTS.md                what an AI agent needs on top of this file (CLAUDE.md imports it)
 LICENSE                  the licence of the repository (not published)
 site/                    the published site
-├── index.njk            home page: tabs listing the exercises, lessons and resources
+├── index.njk            home page: tabs listing the exercises, lessons, flashcards and resources
+├── flashcards.njk       the flashcards page: settings, then study
 ├── lessons/             one page per lesson (.njk)
 ├── exercises/           one page per exercise (.njk)
 ├── css/style.css        the only stylesheet, shared by every page
 ├── js/common.js         helpers shared by the exercises (panels, feedback, wrong fields)
 ├── js/<topic>.js        logic shared by the lesson and the exercise of one topic (subnet.js)
 ├── _includes/           layouts/, partials/ and icons/ (not published)
-└── _data/               resources.json, build time and commit, derived page data (not published)
+├── _data/               resources.json, build time and commit, flashcards, derived page data (not published)
+└── _flashcards/         the flashcard CSV files and flashcards.json (not published)
 eleventy.config.js       11ty config: input, output, filters, shortcodes, collections, copied files
-config/                  the code behind the config: asset_url, icon, page kinds, root prefix
+config/                  the code behind the config: asset_url, icon, page kinds, root prefix, CSV and flashcards
 package.json             Node version, 11ty dependency, npm scripts
 deploy.sh                runs on the server: updates the clone, builds a release, switches to it
 .github/workflows/       the deploy workflow
@@ -34,7 +36,7 @@ _site/                   output of npm start, out of git
 node_modules/            installed packages, out of git
 ```
 
-Everything in `site/` is published, except top-level `_`-prefixed folders (`_includes/`, `_data/`); only site files go there. Everything else stays in the repository.
+Everything in `site/` is published, except top-level `_`-prefixed folders (`_includes/`, `_data/`, `_flashcards/`); only site files go there. Everything else stays in the repository.
 
 Asset files are published by extension. A new file type needs its extension added in `eleventy.config.js`.
 
@@ -75,7 +77,17 @@ When code and docs disagree, fix one of them; do not leave both.
 2. Keep `{% extends "layouts/base.njk" %}`, the `main` block (the `<h1>` and the content) and the `after_main` block (the scripts). The head, the `<title>` and the back link come from the layout.
 3. When a lesson and an exercise cover the same topic, put the shared logic in `js/<topic>.js` and link the lesson to its exercise.
 
-A title starting with a proper noun gets a wrong `<title>`, since its first letter is lowercased after "Leçon : " or "Exercice : ".
+A title starting with a proper noun gets a wrong `<title>`, since its first letter is lowercased after "Leçon : " or "Exercice : ". A title starting with an acronym keeps its case.
+
+### Updating the flashcards
+
+1. Export the `all` tab of the cards' spreadsheet as CSV, keeping the header `Importance,Matiere,Front,Back,Extra`.
+2. Replace `_flashcards/acronymes.csv` or `_flashcards/questions.csv` with it. Keep the file name.
+3. A new `Matiere` value needs an entry in `_flashcards/flashcards.json`: add it to a category of its exam, or to one of the exam's `extras`, or add an extra where it should appear in the list. Otherwise the build fails.
+
+A card's `Matiere` picks both its exam and its subject. Théorie cards use the bare subject (`Hardware`); Pratique cards add `Pratique` before it (`Pratique Hardware`). `flashcards.json` holds the full list.
+
+Card text is plain text, plus `<br>`, `<b>…</b>` and `` `code` ``. The build rules are in `docs/architecture.md` (Flashcards).
 
 ### Page conventions
 

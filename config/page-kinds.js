@@ -1,4 +1,4 @@
-// What a page's tag gives it: the prefix of its <title> and its back link.
+// What a page's tag gives it: the prefix of its <title>, if any, and its back link.
 // Back link targets are relative to the site root.
 export const PAGE_KINDS = {
   lesson: {
@@ -8,6 +8,9 @@ export const PAGE_KINDS = {
   exercise: {
     titlePrefix: "Exercice",
     backLink: { href: "index.html", label: "Accueil", icon: "home" },
+  },
+  flashcards: {
+    backLink: { href: "index.html#flashcards", label: "Accueil", icon: "home" },
   },
 };
 

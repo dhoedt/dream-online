@@ -16,6 +16,9 @@ export default function (eleventyConfig) {
     `${INPUT_DIR}/{,!(_)*/**/}*.${PASSTHROUGH_EXTENSIONS}`,
   );
 
+  // Flashcard CSV files are read by a data file, not as templates: rebuild when they change.
+  eleventyConfig.addWatchTarget(`${INPUT_DIR}/_flashcards/`);
+
   eleventyConfig.addFilter("asset_url", createAssetUrlFilter(INPUT_DIR));
   eleventyConfig.addShortcode("icon", createIconShortcode(`${INPUT_DIR}/_includes/icons`));
 

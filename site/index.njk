@@ -8,6 +8,7 @@ title: Cours d'informatique - DYL
   <div class="tabs" role="tablist" aria-label="Sections du site">
     <button type="button" role="tab" id="tab-exercises" aria-controls="exercises">Exercices</button>
     <button type="button" role="tab" id="tab-lessons" aria-controls="lessons">Leçons</button>
+    <button type="button" role="tab" id="tab-flashcards" aria-controls="flashcards">Flashcards</button>
     <button type="button" role="tab" id="tab-resources" aria-controls="resources">Ressources</button>
   </div>
 
@@ -21,6 +22,17 @@ title: Cours d'informatique - DYL
         </a>
       </li>
 {%- endfor %}
+    </ul>
+  </section>
+
+  <section class="tab-panel" role="tabpanel" id="flashcards" aria-labelledby="tab-flashcards">
+    <ul class="exercise-list">
+      <li>
+        <a class="exercise-link" href="{{ rootPrefix }}flashcards/">
+          <span class="exercise-title">Réviser les flashcards</span>
+          <span class="link-host">{{ flashcards.cards.length }} cartes, à filtrer par examen, matière et type</span>
+        </a>
+      </li>
     </ul>
   </section>
 

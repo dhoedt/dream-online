@@ -1,0 +1,328 @@
+---
+title: Flashcards
+tags: flashcards
+permalink: "flashcards/"
+---
+{% extends "layouts/base.njk" %}
+{% block main %}
+{%- macro subjectBox(subject, exam) %}
+        <label class="check"><input type="checkbox" name="subject" value="{{ subject.id }}" data-exam="{{ exam.id }}" checked{% if subject.cardCount == 0 %} disabled{% endif %}> {{ subject.title }} <span class="check-count">({{ subject.cardCount }})</span></label>
+{%- endmacro %}
+  <h1>{{ title }}</h1>
+  <p class="intro">Choisissez les cartes à réviser, puis commencez. Cherchez la réponse de tête, puis retournez la carte. Les cartes à revoir peuvent être reprises à la fin de la série.</p>
+
+  <form class="question" id="settings" aria-label="Réglages">
+{%- for exam in flashcards.exams %}
+    <fieldset class="filter-group">
+      <legend><label class="check"><input type="checkbox" data-exam-toggle="{{ exam.id }}" checked> {{ exam.title }}</label></legend>
+      <div class="filter-options">
+{%- for subject in exam.coreSubjects %}{{ subjectBox(subject, exam) }}{% endfor %}
+{%- if exam.extraSubjects.length > 0 %}
+        <div class="filter-extras">
+{%- for subject in exam.extraSubjects %}{{ subjectBox(subject, exam) }}{% endfor %}
+        </div>
+{%- endif %}
+      </div>
+    </fieldset>
+{%- endfor %}
+    <fieldset class="filter-group">
+      <legend>Type de cartes</legend>
+      <div class="filter-options">
+{%- for source in flashcards.sources %}
+        <label class="check"><input type="checkbox" name="source" value="{{ source.id }}" checked> {{ source.title }} <span class="check-count">({{ source.cardCount }})</span></label>
+{%- endfor %}
+      </div>
+    </fieldset>
+    <fieldset class="filter-group">
+      <legend>Options</legend>
+      <div class="filter-options">
+        <label class="check"><input type="checkbox" id="shuffle" checked> Mélanger les cartes</label>
+      </div>
+    </fieldset>
+    <div class="actions">
+      <button type="submit" class="primary" id="start">Commencer</button>
+      <p class="feedback" id="selection-count" role="status"></p>
+    </div>
+  </form>
+
+  <section class="question flashcard" id="card" aria-label="Carte" hidden>
+    <div class="flashcard-toolbar">
+      <p class="flashcard-progress" id="progress"></p>
+      <div class="help-buttons">
+        <button type="button" id="open-settings">Réglages</button>
+        <button type="button" class="icon-button" id="restart" title="Recommencer la série" aria-label="Recommencer la série">
+          {% icon "restart" %}
+        </button>
+      </div>
+    </div>
+    {#- Decorative: the counter above already gives the position in words. #}
+    <div class="flashcard-bar" aria-hidden="true"><div class="flashcard-bar-fill" id="progress-bar"></div></div>
+    <div aria-live="polite">
+      <p class="flashcard-origin" id="card-origin"></p>
+      <div class="flashcard-front" id="card-front"></div>
+      <div class="flashcard-back" id="card-back" hidden>
+        <div id="card-answer"></div>
+        <div class="flashcard-extra" id="card-extra"></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="primary" id="flip">Afficher la réponse</button>
+      <button type="button" class="is-cancel" id="mark-review" hidden>À revoir</button>
+      <button type="button" class="is-confirm" id="mark-known" hidden>Je savais</button>
+    </div>
+    <p class="flashcard-keys">Clavier&nbsp;: Espace retourne la carte, ← à revoir, → je savais.</p>
+  </section>
+
+  <section class="question" id="summary" hidden>
+    <p class="feedback" id="summary-text" role="status"></p>
+    <div class="actions">
+      <button type="button" class="primary" id="review-again"></button>
+      <button type="button" id="restart-all">Recommencer la série</button>
+      <button type="button" id="summary-settings">Changer les réglages</button>
+    </div>
+  </section>
+
+  {#- The cards, read by the script below. Their text is already escaped HTML. #}
+  <ol id="flashcards" hidden>
+{%- for card in flashcards.cards %}
+    <li data-subject="{{ card.subject }}" data-source="{{ card.source }}" data-origin="{{ card.origin }}"><div data-side="front">{{ card.front | safe }}</div><div data-side="back">{{ card.back | safe }}</div><div data-side="extra">{{ card.extra | safe }}</div></li>
+{%- endfor %}
+  </ol>
+{% endblock %}
+{% block after_main %}
+<script>
+  const CARDS = [...document.querySelectorAll('#flashcards > li')].map((item) => ({
+    subject: item.dataset.subject,
+    source: item.dataset.source,
+    origin: item.dataset.origin,
+    front: item.querySelector('[data-side="front"]').innerHTML,
+    back: item.querySelector('[data-side="back"]').innerHTML,
+    extra: item.querySelector('[data-side="extra"]').innerHTML,
+  }));
+  const SETTINGS_KEY = 'flashcards-settings';
+
+  const elements = Object.fromEntries(
+    ['settings', 'shuffle', 'start', 'selection-count', 'card', 'progress', 'progress-bar', 'open-settings', 'restart',
+      'card-origin', 'card-front', 'card-back', 'card-answer', 'card-extra', 'flip', 'mark-review', 'mark-known',
+      'summary', 'summary-text', 'review-again', 'restart-all', 'summary-settings']
+      .map((id) => [id, document.getElementById(id)]),
+  );
+  const subjectBoxes = [...elements.settings.querySelectorAll('input[name="subject"]')];
+  const sourceBoxes = [...elements.settings.querySelectorAll('input[name="source"]')];
+  const examToggles = [...elements.settings.querySelectorAll('input[data-exam-toggle]')];
+
+  // The series is the cards picked in the settings; one pass goes through `passCards` (indexes into CARDS),
+  // and cards marked "à revoir" are kept for the next pass.
+  let seriesCards = [];
+  let passCards = [];
+  let position = 0;
+  let cardsToReview = [];
+  let isFlipped = false;
+
+  // --- Settings ---
+
+  function checkedValues(boxes) {
+    return boxes.filter((box) => box.checked).map((box) => box.value);
+  }
+
+  // Unchecked boxes are saved, so a subject added later starts checked.
+  function saveSettings() {
+    const settings = {
+      uncheckedSubjects: subjectBoxes.filter((box) => !box.checked).map((box) => box.value),
+      uncheckedSources: sourceBoxes.filter((box) => !box.checked).map((box) => box.value),
+      shuffle: elements.shuffle.checked,
+    };
+    try {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    } catch {
+      // Storage may be full or blocked: the settings then last for this visit only.
+    }
+  }
+
+  function restoreSettings() {
+    let settings;
+    try {
+      settings = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+    } catch {
+      return;
+    }
+    if (!settings) {
+      return;
+    }
+    for (const box of subjectBoxes) {
+      box.checked = !box.disabled && !(settings.uncheckedSubjects ?? []).includes(box.value);
+    }
+    for (const box of sourceBoxes) {
+      box.checked = !(settings.uncheckedSources ?? []).includes(box.value);
+    }
+    elements.shuffle.checked = settings.shuffle ?? true;
+  }
+
+  function examBoxes(examId) {
+    return subjectBoxes.filter((box) => box.dataset.exam === examId && !box.disabled);
+  }
+
+  // An exam's toggle is checked when all its subjects are, and mixed when only some are.
+  function updateExamToggles() {
+    for (const toggle of examToggles) {
+      const boxes = examBoxes(toggle.dataset.examToggle);
+      const checkedCount = boxes.filter((box) => box.checked).length;
+      toggle.checked = checkedCount === boxes.length && boxes.length > 0;
+      toggle.indeterminate = checkedCount > 0 && checkedCount < boxes.length;
+    }
+  }
+
+  function selectedCards() {
+    const subjects = checkedValues(subjectBoxes);
+    const sources = checkedValues(sourceBoxes);
+    return [...CARDS.keys()].filter((index) =>
+      subjects.includes(CARDS[index].subject) && sources.includes(CARDS[index].source));
+  }
+
+  function updateSelection() {
+    const count = selectedCards().length;
+    elements.start.disabled = count === 0;
+    elements['selection-count'].textContent = count === 0
+      ? 'Aucune carte ne correspond aux réglages.'
+      : `${count} carte${count > 1 ? 's' : ''} sélectionnée${count > 1 ? 's' : ''}`;
+  }
+
+  function showSettings() {
+    elements.card.hidden = true;
+    elements.summary.hidden = true;
+    elements.settings.hidden = false;
+    elements.start.focus();
+  }
+
+  // --- Study ---
+
+  function shuffled(items) {
+    const copy = [...items];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  function startPass(cardIndexes) {
+    passCards = elements.shuffle.checked ? shuffled(cardIndexes) : [...cardIndexes];
+    position = 0;
+    cardsToReview = [];
+    elements.settings.hidden = true;
+    elements.summary.hidden = true;
+    elements.card.hidden = false;
+    showCard();
+    elements.flip.focus();
+  }
+
+  function startSeries() {
+    startPass(seriesCards);
+  }
+
+  function showCard() {
+    const card = CARDS[passCards[position]];
+    isFlipped = false;
+    elements.progress.textContent = `Carte ${position + 1} / ${passCards.length}`;
+    // The bar fills with the cards already marked in this pass.
+    elements['progress-bar'].style.width = `${(position / passCards.length) * 100}%`;
+    elements['card-origin'].textContent = card.origin;
+    elements['card-front'].innerHTML = card.front;
+    elements['card-answer'].innerHTML = card.back;
+    elements['card-extra'].innerHTML = card.extra;
+    elements['card-extra'].hidden = card.extra === '';
+    elements['card-back'].hidden = true;
+    elements.flip.hidden = false;
+    elements['mark-review'].hidden = true;
+    elements['mark-known'].hidden = true;
+  }
+
+  function flipCard() {
+    isFlipped = true;
+    elements['card-back'].hidden = false;
+    elements.flip.hidden = true;
+    elements['mark-review'].hidden = false;
+    elements['mark-known'].hidden = false;
+    elements['mark-known'].focus();
+  }
+
+  function markCard(isKnown) {
+    if (!isKnown) {
+      cardsToReview.push(passCards[position]);
+    }
+    position++;
+    if (position < passCards.length) {
+      showCard();
+      elements.flip.focus();
+    } else {
+      showSummary();
+    }
+  }
+
+  function showSummary() {
+    const knownCount = passCards.length - cardsToReview.length;
+    const reviewCount = cardsToReview.length;
+    elements.card.hidden = true;
+    elements.summary.hidden = false;
+    elements['summary-text'].textContent = reviewCount === 0
+      ? `Bravo, vous saviez les ${passCards.length} cartes !`
+      : `Vous saviez ${knownCount} carte${knownCount > 1 ? 's' : ''} sur ${passCards.length}.`;
+    elements['summary-text'].className = `feedback ${reviewCount === 0 ? 'is-correct' : ''}`;
+    elements['review-again'].hidden = reviewCount === 0;
+    elements['review-again'].textContent = reviewCount === 1
+      ? 'Revoir la carte à revoir'
+      : `Revoir les ${reviewCount} cartes à revoir`;
+    (reviewCount === 0 ? elements['restart-all'] : elements['review-again']).focus();
+  }
+
+  // --- Events ---
+
+  for (const toggle of examToggles) {
+    toggle.addEventListener('change', () => {
+      for (const box of examBoxes(toggle.dataset.examToggle)) {
+        box.checked = toggle.checked;
+      }
+    });
+  }
+  // Runs after the exam toggle's own handler, for every box of the form.
+  elements.settings.addEventListener('change', () => {
+    updateExamToggles();
+    updateSelection();
+    saveSettings();
+  });
+  elements.settings.addEventListener('submit', (event) => {
+    event.preventDefault();
+    seriesCards = selectedCards();
+    if (seriesCards.length > 0) {
+      startSeries();
+    }
+  });
+
+  elements.flip.addEventListener('click', flipCard);
+  elements['mark-review'].addEventListener('click', () => markCard(false));
+  elements['mark-known'].addEventListener('click', () => markCard(true));
+  elements['review-again'].addEventListener('click', () => startPass(cardsToReview));
+  elements['restart-all'].addEventListener('click', startSeries);
+  elements.restart.addEventListener('click', startSeries);
+  elements['open-settings'].addEventListener('click', showSettings);
+  elements['summary-settings'].addEventListener('click', showSettings);
+
+  // Arrows mark a flipped card. Space flips it when no button has the focus (a focused button handles Space itself).
+  document.addEventListener('keydown', (event) => {
+    if (elements.card.hidden || event.altKey || event.ctrlKey || event.metaKey) {
+      return;
+    }
+    if (isFlipped && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+      event.preventDefault();
+      markCard(event.key === 'ArrowRight');
+    } else if (!isFlipped && event.key === ' ' && document.activeElement === document.body) {
+      event.preventDefault();
+      flipCard();
+    }
+  });
+
+  restoreSettings();
+  updateExamToggles();
+  updateSelection();
+</script>
+{% endblock %}

@@ -200,15 +200,15 @@ h1 {
   padding: 0.5rem;
 }
 
-.icon-button.is-confirm,
-.icon-button.is-confirm:hover:not(:disabled) {
+button.is-confirm,
+button.is-confirm:hover:not(:disabled) {
   border-color: var(--success);
   background: var(--success-soft);
   color: var(--success);
 }
 
-.icon-button.is-cancel,
-.icon-button.is-cancel:hover:not(:disabled) {
+button.is-cancel,
+button.is-cancel:hover:not(:disabled) {
   border-color: var(--danger);
   background: var(--danger-soft);
   color: var(--danger);
@@ -527,6 +527,7 @@ button:disabled {
 }
 
 .panel code,
+.flashcard code,
 .final-answer strong {
   font-family: var(--mono);
   overflow-wrap: anywhere;
@@ -725,6 +726,131 @@ button:disabled {
   font-size: 0.85rem;
 }
 
+/* Flashcard settings: one box per filter group, its checkboxes in wrapping rows. */
+.filter-group {
+  margin: 0 0 1rem;
+  padding: 0.5rem 1rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.filter-group legend {
+  padding: 0 0.35rem;
+  font-weight: 600;
+}
+
+.filter-options,
+.filter-extras {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+}
+
+/* An exam's own subjects, set apart from the categories every exam shares. */
+.filter-extras {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--border);
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.check:has(input:disabled) {
+  color: var(--muted);
+  cursor: default;
+}
+
+.check-count {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Flashcard study: counter and series buttons on top, the card, then the flip or mark buttons. */
+.flashcard-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.flashcard-progress {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Share of the pass already done, under the counter. */
+.flashcard-bar {
+  height: 0.4rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.flashcard-bar-fill {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flashcard-bar-fill { transition: none; }
+}
+
+/* A toggle button, highlighted while on. */
+button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--panel);
+  color: var(--accent);
+}
+
+/* Where the card comes from: exam and subject. */
+.flashcard-origin {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.flashcard-front {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.flashcard-back {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border);
+}
+
+.flashcard-extra {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.flashcard-keys {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+/* Keyboard shortcuts mean nothing on a touch screen. */
+@media (pointer: coarse) {
+  .flashcard-keys { display: none; }
+}
+
 .layer-list {
   margin: 0;
   padding: 0;
@@ -836,7 +962,8 @@ select.option-choice:disabled { cursor: default; }
 /* The toggle only exists on phones, where the options table becomes a drawer pinned to the bottom of the screen. */
 .options-toggle { display: none; }
 
-input[type="radio"] {
+input[type="radio"],
+input[type="checkbox"] {
   width: 1.25rem;
   height: 1.25rem;
   min-height: 0;
@@ -1081,6 +1208,7 @@ input[type="radio"] {
 @media (pointer: coarse) {
   button,
   .back-link,
+  .check,
   input,
   select {
     min-height: 2.75rem;

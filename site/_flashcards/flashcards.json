@@ -1,0 +1,35 @@
+{
+  "sources": [
+    { "id": "acronymes", "file": "acronymes.csv", "title": "Acronymes" },
+    { "id": "questions", "file": "questions.csv", "title": "Questions" }
+  ],
+  "categories": [
+    { "id": "hardware", "title": "Hardware" },
+    { "id": "software", "title": "Software" },
+    { "id": "reseau", "title": "Réseau" }
+  ],
+  "exams": [
+    {
+      "id": "theorie",
+      "title": "Théorie",
+      "categories": {
+        "hardware": ["Hardware"],
+        "software": ["OS", "Software"],
+        "reseau": ["Réseau"]
+      },
+      "extras": []
+    },
+    {
+      "id": "pratique",
+      "title": "Pratique",
+      "categories": {
+        "hardware": ["Pratique Hardware"],
+        "software": ["Pratique OS"],
+        "reseau": ["Pratique Réseau"]
+      },
+      "extras": [
+        { "id": "raccourcis", "title": "Raccourcis clavier", "matieres": ["Shortcuts", "Pratique Raccourcis"] }
+      ]
+    }
+  ]
+}

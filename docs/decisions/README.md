@@ -12,3 +12,5 @@ D2 to D5 were recorded on 2026-11-14, after they were taken. Their original date
 | [D5](d005-site-folder.md) | Site in its own folder | 2026-11-14 | Only `site/` is published, minus 11ty's top-level `_` folders |
 | [D6](d006-static-site-build-tools-allowed.md) | Static site, build tools allowed | 2026-11-23 | Static HTML, CSS and vanilla JS; the build may use a tool and a package manager, each in its own decision |
 | [D7](d007-eleventy-build.md) | Eleventy for the build | 2026-11-23 | 11ty builds the site with a shared layout, partials and a generated listing |
+| [D8](d008-flashcard-master-files.md) | Flashcards from master CSV files | 2026-11-23 | 2 master CSV files; `Matiere` files each card under an exam and a subject, listed with their order in `flashcards.json` |
+| [D9](d009-single-flashcard-page-with-settings.md) | One flashcard page with settings | 2026-11-25 | One page for all cards; a settings screen filters them by exam, subject and type, and sets shuffling; settings kept in `localStorage` |
